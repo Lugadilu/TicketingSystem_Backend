@@ -45,4 +45,6 @@ public class Tickets
     
     // All activity logs for this ticket
     public ICollection<TicketActivityLog> ActivityLogs { get; set; } = new List<TicketActivityLog>();
+    public ICollection<TicketAttachment> Attachments { get; set; } = new List<TicketAttachment>();
+
 }

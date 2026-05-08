@@ -13,6 +13,7 @@ public class AppDbContext : DbContext
     public DbSet<Tickets> Tickets { get; set; }
     public DbSet<TicketComment> TicketComments { get; set; }
     public DbSet<TicketActivityLog> TicketActivityLogs { get; set; }
+    public DbSet<TicketAttachment> TicketAttachments { get; set; }
 
      // This method configures relationships and constraints between tables
     protected override void OnModelCreating(ModelBuilder modelBuilder)
