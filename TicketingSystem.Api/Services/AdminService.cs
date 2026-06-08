@@ -1,9 +1,10 @@
 // File: Services/AdminService.cs - FIXED VERSION
 
-using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore;
 using TicketingSystem.Api.Data;
 using TicketingSystem.Api.Dtos.Admin;
 using TicketingSystem.Api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace TicketingSystem.Api.Services;
 
@@ -57,8 +58,11 @@ public class AdminService : IAdminService
         if (closedTicketsWithTime.Any())
         {
             // Calculate total hours for all closed tickets
-            var totalHours = closedTicketsWithTime
-                .Sum(t => (t.ClosedAt.Value - t.CreatedAt).TotalHours);
+            //var totalHours = closedTicketsWithTime
+                //.Sum(t => (t.ClosedAt.Value - t.CreatedAt).TotalHours);
+                var totalHours = closedTicketsWithTime
+                .Sum(t => (t.ClosedAt!.Value - t.CreatedAt).TotalHours);
+                
             
             // Divide by number of closed tickets
             avgResolutionTime = totalHours / closedTicketsWithTime.Count;

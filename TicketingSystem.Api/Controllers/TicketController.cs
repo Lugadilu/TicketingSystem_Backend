@@ -20,11 +20,14 @@ public class TicketsController : ControllerBase
 {
     private readonly ITicketService _ticketService;
     private readonly AppDbContext _context;
+    private readonly IPdfService _pdfService;
 
-    public TicketsController(ITicketService ticketService, AppDbContext context)
+    public TicketsController(ITicketService ticketService, AppDbContext context, IPdfService pdfService)
     {
         _ticketService = ticketService;
         _context = context;
+        _pdfService = pdfService;
+
     }
 
     // ============ HELPER METHODS ============
@@ -966,52 +969,303 @@ public async Task<ActionResult<ApiResponseDto<PaginatedResponseDto<TicketListIte
     }
 
 
-    // [HttpPatch("{id}/priority")]
-    // public async Task<ActionResult<ApiResponseDto<TicketResponseDto>>> UpdatePriority(
-    //     [FromRoute] Guid id,
-    //     [FromBody] UpdateTicketPriorityDto dto)
-    //     {
-    //         try
-    //         {
-    //             if (!ModelState.IsValid)
-    //                 return BadRequest(new ApiResponseDto<TicketResponseDto>
-    //                 {
-    //                     Success = false,
-    //                     Message = "Invalid input",
-    //                     Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList()
-    //                 });
+    // ==================== ADD THESE ENDPOINTS TO YOUR EXISTING TicketsController ====================
+// Also add: private readonly IPdfService _pdfService; to constructor injection
+// Update constructor: public TicketsController(ITicketService ticketService, AppDbContext context, IPdfService pdfService)
 
-    //             var userId = GetUserIdFromToken();
-    //             var userRole = GetUserRoleFromToken();
+#region PDF Downloads
 
-    //             var result = await _ticketService.UpdatePriorityAsync(id, dto, userId, userRole);
+/// <summary>
+/// GET /api/tickets/{id}/download
+/// Download ticket details as PDF.
+/// Accessible by: SuperAdmin, Support, TeamLead (own team), Technician (assigned), Customer (own)
+/// </summary>
+[HttpGet("{id}/download")]
+public async Task<IActionResult> DownloadTicketPdf([FromRoute] Guid id)
+{
+    try
+    {
+        var userId = GetUserIdFromToken();
+        var userRole = GetUserRoleFromToken();
 
-    //             return Ok(new ApiResponseDto<TicketResponseDto>
-    //             {
-    //                 Success = true,
-    //                 Message = "Ticket priority updated successfully",
-    //                 Data = result,
-    //                 Errors = new List<string>()
-    //             });
-    //         }
-    //         catch (UnauthorizedAccessException ex)
-    //         {
-    //             return StatusCode(403, new ApiResponseDto<TicketResponseDto>
-    //             {
-    //                 Success = false,
-    //                 Message = ex.Message,
-    //                 Errors = new List<string> { ex.Message }
-    //             });
-    //         }
-    //         catch (InvalidOperationException ex)
-    //         {
-    //             return BadRequest(new ApiResponseDto<TicketResponseDto>
-    //             {
-    //                 Success = false,
-    //                 Message = ex.Message,
-    //                 Errors = new List<string> { ex.Message }
-    //             });
-    //         }
-    //     }
+        var canDownload = await _ticketService.CanUserDownloadTicketAsync(id, userId, userRole);
+        if (!canDownload)
+            return StatusCode(403, new ApiResponseDto<string>
+            {
+                Success = false,
+                Message = "You don't have permission to download this ticket",
+                Errors = new List<string> { "Forbidden" }
+            });
 
+        var pdfBytes = await _pdfService.GenerateTicketPdfAsync(id);
+        var ticket = await _ticketService.GetTicketByIdAsync(id, userId, userRole);
+
+        return File(pdfBytes, "application/pdf", $"Ticket_{ticket.TicketNumber}.pdf");
+    }
+    catch (InvalidOperationException ex)
+    {
+        return NotFound(new ApiResponseDto<string>
+        {
+            Success = false,
+            Message = ex.Message,
+            Errors = new List<string> { ex.Message }
+        });
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new ApiResponseDto<string>
+        {
+            Success = false,
+            Message = "An error occurred while generating the PDF",
+            Errors = new List<string> { ex.Message }
+        });
+    }
+}
+
+/// <summary>
+/// GET /api/tickets/{id}/download-with-report
+/// Download ticket + technician report as a combined PDF.
+/// Accessible by: SuperAdmin, Support, TeamLead (own team), Technician (assigned)
+/// NOT accessible by Customers
+/// </summary>
+[HttpGet("{id}/download-with-report")]
+public async Task<IActionResult> DownloadTicketWithReportPdf([FromRoute] Guid id)
+{
+    try
+    {
+        var userId = GetUserIdFromToken();
+        var userRole = GetUserRoleFromToken();
+
+        // Check ticket download permission
+        var canDownload = await _ticketService.CanUserDownloadTicketAsync(id, userId, userRole);
+        if (!canDownload)
+            return StatusCode(403, new ApiResponseDto<string>
+            {
+                Success = false,
+                Message = "You don't have permission to download this ticket",
+                Errors = new List<string> { "Forbidden" }
+            });
+
+        // Customers cannot download internal reports
+        if (userRole == UserRole.Customer)
+            return StatusCode(403, new ApiResponseDto<string>
+            {
+                Success = false,
+                Message = "Customers cannot download internal reports",
+                Errors = new List<string> { "Forbidden" }
+            });
+
+        var pdfBytes = await _pdfService.GenerateTicketWithReportPdfAsync(id);
+        var ticket = await _ticketService.GetTicketByIdAsync(id, userId, userRole);
+
+        return File(pdfBytes, "application/pdf", $"Ticket_{ticket.TicketNumber}_Full_Report.pdf");
+    }
+    catch (InvalidOperationException ex)
+    {
+        return NotFound(new ApiResponseDto<string>
+        {
+            Success = false,
+            Message = ex.Message,
+            Errors = new List<string> { ex.Message }
+        });
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new ApiResponseDto<string>
+        {
+            Success = false,
+            Message = "An error occurred while generating the PDF",
+            Errors = new List<string> { ex.Message }
+        });
+    }
+}
+
+#endregion
+
+#region Ticket Reports (Technician Resolution Reports)
+
+/// <summary>
+/// POST /api/tickets/{id}/report
+/// Submit a technician resolution report for a ticket.
+/// Only the assigned technician can submit.
+/// Can be called at any stage before the ticket is closed.
+/// </summary>
+[HttpPost("{id}/report")]
+public async Task<ActionResult<ApiResponseDto<TicketReportResponseDto>>> SubmitReport(
+    [FromRoute] Guid id,
+    [FromBody] CreateTicketReportDto dto)
+{
+    try
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(new ApiResponseDto<TicketReportResponseDto>
+            {
+                Success = false,
+                Message = "Invalid input",
+                Errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList()
+            });
+
+        var userId = GetUserIdFromToken();
+        var userRole = GetUserRoleFromToken();
+
+        // Only technicians can submit reports
+        if (userRole != UserRole.Technician)
+            return StatusCode(403, new ApiResponseDto<TicketReportResponseDto>
+            {
+                Success = false,
+                Message = "Only technicians can submit resolution reports",
+                Errors = new List<string> { "Forbidden" }
+            });
+
+        var result = await _ticketService.SubmitTicketReportAsync(id, dto, userId);
+
+        return Ok(new ApiResponseDto<TicketReportResponseDto>
+        {
+            Success = true,
+            Message = "Report submitted successfully",
+            Data = result,
+            Errors = new List<string>()
+        });
+    }
+    catch (UnauthorizedAccessException ex)
+    {
+        return StatusCode(403, new ApiResponseDto<TicketReportResponseDto>
+        {
+            Success = false,
+            Message = ex.Message,
+            Errors = new List<string> { ex.Message }
+        });
+    }
+    catch (InvalidOperationException ex)
+    {
+        return BadRequest(new ApiResponseDto<TicketReportResponseDto>
+        {
+            Success = false,
+            Message = ex.Message,
+            Errors = new List<string> { ex.Message }
+        });
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new ApiResponseDto<TicketReportResponseDto>
+        {
+            Success = false,
+            Message = "An error occurred while submitting the report",
+            Errors = new List<string> { ex.Message }
+        });
+    }
+}
+
+/// <summary>
+/// GET /api/tickets/{id}/report
+/// Get the technician resolution report for a ticket.
+/// Accessible by: SuperAdmin, Support, TeamLead (own team), Technician (own report)
+/// NOT accessible by Customers
+/// </summary>
+[HttpGet("{id}/report")]
+public async Task<ActionResult<ApiResponseDto<TicketReportResponseDto>>> GetReport([FromRoute] Guid id)
+{
+    try
+    {
+        var userId = GetUserIdFromToken();
+        var userRole = GetUserRoleFromToken();
+
+        var canView = await _ticketService.CanUserViewReportAsync(id, userId, userRole);
+        if (!canView)
+            return StatusCode(403, new ApiResponseDto<TicketReportResponseDto>
+            {
+                Success = false,
+                Message = "You don't have permission to view this report",
+                Errors = new List<string> { "Forbidden" }
+            });
+
+        var result = await _ticketService.GetTicketReportAsync(id);
+
+        if (result == null)
+            return NotFound(new ApiResponseDto<TicketReportResponseDto>
+            {
+                Success = false,
+                Message = "No report found for this ticket",
+                Errors = new List<string> { "Report not found" }
+            });
+
+        return Ok(new ApiResponseDto<TicketReportResponseDto>
+        {
+            Success = true,
+            Message = "Report retrieved successfully",
+            Data = result,
+            Errors = new List<string>()
+        });
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new ApiResponseDto<TicketReportResponseDto>
+        {
+            Success = false,
+            Message = "An error occurred while retrieving the report",
+            Errors = new List<string> { ex.Message }
+        });
+    }
+}
+
+/// <summary>
+/// GET /api/tickets/{id}/report/download
+/// Download the technician resolution report as a standalone PDF.
+/// Accessible by: SuperAdmin, Support, TeamLead (own team), Technician (own report)
+/// </summary>
+[HttpGet("{id}/report/download")]
+public async Task<IActionResult> DownloadReportPdf([FromRoute] Guid id)
+{
+    try
+    {
+        var userId = GetUserIdFromToken();
+        var userRole = GetUserRoleFromToken();
+
+        var canView = await _ticketService.CanUserViewReportAsync(id, userId, userRole);
+        if (!canView)
+            return StatusCode(403, new ApiResponseDto<string>
+            {
+                Success = false,
+                Message = "You don't have permission to download this report",
+                Errors = new List<string> { "Forbidden" }
+            });
+
+        var report = await _ticketService.GetTicketReportAsync(id);
+        if (report == null)
+            return NotFound(new ApiResponseDto<string>
+            {
+                Success = false,
+                Message = "No report found for this ticket",
+                Errors = new List<string> { "Report not found" }
+            });
+
+        var pdfBytes = await _pdfService.GenerateReportPdfAsync(report.Id);
+
+        var ticket = await _ticketService.GetTicketByIdAsync(id, userId, userRole);
+        return File(pdfBytes, "application/pdf", $"Report_{ticket.TicketNumber}.pdf");
+    }
+    catch (InvalidOperationException ex)
+    {
+        return NotFound(new ApiResponseDto<string>
+        {
+            Success = false,
+            Message = ex.Message,
+            Errors = new List<string> { ex.Message }
+        });
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new ApiResponseDto<string>
+        {
+            Success = false,
+            Message = "An error occurred while generating the report PDF",
+            Errors = new List<string> { ex.Message }
+        });
+    }
+}
+
+#endregion
 }

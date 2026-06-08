@@ -1,5 +1,5 @@
 using System;
-using Supabase.Gotrue;
+
 using TicketingSystem.Api.Models;
 
 namespace TicketingSystem.Api.Dtos.Auth;

@@ -17,7 +17,7 @@ namespace TicketingSystem.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.3")
+                .HasAnnotation("ProductVersion", "10.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -63,6 +63,60 @@ namespace TicketingSystem.Api.Migrations
                     b.ToTable("TicketActivityLogs");
                 });
 
+            modelBuilder.Entity("TicketingSystem.Api.Models.TicketAttachment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("OriginalFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<Guid>("TicketId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TicketsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<Guid>("UploadedByUserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TicketId");
+
+                    b.HasIndex("TicketsId");
+
+                    b.HasIndex("UploadedByUserId");
+
+                    b.ToTable("TicketAttachments");
+                });
+
             modelBuilder.Entity("TicketingSystem.Api.Models.TicketComment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -96,6 +150,66 @@ namespace TicketingSystem.Api.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("TicketComments");
+                });
+
+            modelBuilder.Entity("TicketingSystem.Api.Models.TicketReport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FollowUpNotes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<bool>("IsResolved")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("PartsUsed")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Recommendations")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ResolutionSteps")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<Guid>("TechnicianUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TicketId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("TimeSpent")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("WorkSummary")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TechnicianUserId");
+
+                    b.HasIndex("TicketId")
+                        .IsUnique();
+
+                    b.ToTable("TicketReports");
                 });
 
             modelBuilder.Entity("TicketingSystem.Api.Models.Tickets", b =>
@@ -372,6 +486,29 @@ namespace TicketingSystem.Api.Migrations
                     b.Navigation("Ticket");
                 });
 
+            modelBuilder.Entity("TicketingSystem.Api.Models.TicketAttachment", b =>
+                {
+                    b.HasOne("TicketingSystem.Api.Models.Tickets", "Ticket")
+                        .WithMany()
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TicketingSystem.Api.Models.Tickets", null)
+                        .WithMany("Attachments")
+                        .HasForeignKey("TicketsId");
+
+                    b.HasOne("TicketingSystem.Api.Models.Users", "UploadedByUser")
+                        .WithMany()
+                        .HasForeignKey("UploadedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Ticket");
+
+                    b.Navigation("UploadedByUser");
+                });
+
             modelBuilder.Entity("TicketingSystem.Api.Models.TicketComment", b =>
                 {
                     b.HasOne("TicketingSystem.Api.Models.Tickets", "Ticket")
@@ -389,6 +526,25 @@ namespace TicketingSystem.Api.Migrations
                     b.Navigation("Ticket");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TicketingSystem.Api.Models.TicketReport", b =>
+                {
+                    b.HasOne("TicketingSystem.Api.Models.Users", "TechnicianUser")
+                        .WithMany()
+                        .HasForeignKey("TechnicianUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TicketingSystem.Api.Models.Tickets", "Ticket")
+                        .WithOne()
+                        .HasForeignKey("TicketingSystem.Api.Models.TicketReport", "TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TechnicianUser");
+
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("TicketingSystem.Api.Models.Tickets", b =>
@@ -443,6 +599,8 @@ namespace TicketingSystem.Api.Migrations
             modelBuilder.Entity("TicketingSystem.Api.Models.Tickets", b =>
                 {
                     b.Navigation("ActivityLogs");
+
+                    b.Navigation("Attachments");
 
                     b.Navigation("Comments");
                 });

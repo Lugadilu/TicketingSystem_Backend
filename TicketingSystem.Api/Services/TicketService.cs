@@ -40,17 +40,25 @@ public interface ITicketService
     Task<List<CommentResponseDto>> GetCommentsAsync(Guid ticketId);
     Task<bool> DeleteCommentAsync(Guid commentId, Guid userId);
     Task<List<ActivityLogResponseDto>> GetTicketActivityAsync(Guid ticketId);
+
+
+Task<TicketReportResponseDto> SubmitTicketReportAsync(Guid ticketId, CreateTicketReportDto dto, Guid technicianUserId);
+Task<TicketReportResponseDto?> GetTicketReportAsync(Guid ticketId);
+Task<bool> CanUserDownloadTicketAsync(Guid ticketId, Guid userId, UserRole userRole);
+Task<bool> CanUserViewReportAsync(Guid ticketId, Guid userId, UserRole userRole);
 }
 
 public class TicketService : ITicketService
 {
     private readonly AppDbContext _context;
     private readonly IEmailService _emailService;
+    private readonly IPdfService _pdfService;
 
-    public TicketService(AppDbContext context, IEmailService emailService)
+    public TicketService(AppDbContext context, IEmailService emailService, IPdfService pdfService)
     {
         _context = context;
         _emailService = emailService;
+        _pdfService = pdfService;
     }
 
     public async Task<CreateTicketResponseDto> CreateTicketAsync(CreateTicketDto dto, Guid createdByUserId)
@@ -1089,4 +1097,205 @@ public class TicketService : ITicketService
     }
 
 
+    #region Report Methods
+
+/// <summary>
+/// Technician submits a resolution report for a ticket they are assigned to.
+/// Only the currently assigned technician can submit a report.
+/// Cannot submit if ticket is already closed.
+/// </summary>
+public async Task<TicketReportResponseDto> SubmitTicketReportAsync(
+    Guid ticketId,
+    CreateTicketReportDto dto,
+    Guid technicianUserId)
+{
+    var ticket = await _context.Tickets
+        .Include(t => t.AssignedToUser)
+        .FirstOrDefaultAsync(t => t.Id == ticketId);
+
+    if (ticket == null)
+        throw new InvalidOperationException("Ticket not found");
+
+    if (ticket.Status == TicketStatus.Closed)
+        throw new InvalidOperationException("Cannot submit a report for a closed ticket");
+
+    if (ticket.AssignedToUserId != technicianUserId)
+        throw new UnauthorizedAccessException("Only the assigned technician can submit a report");
+
+    var technician = await _context.Users.FindAsync(technicianUserId);
+    if (technician == null)
+        throw new InvalidOperationException("Technician not found");
+
+    // Check if a report already exists for this ticket
+    var existingReport = await _context.TicketReports
+        .FirstOrDefaultAsync(r => r.TicketId == ticketId);
+
+    if (existingReport != null)
+    {
+        // Update existing report
+        existingReport.WorkSummary = dto.WorkSummary;
+        existingReport.ResolutionSteps = dto.ResolutionSteps;
+        existingReport.PartsUsed = dto.PartsUsed ?? string.Empty;
+        existingReport.TimeSpent = dto.TimeSpent;
+        existingReport.Recommendations = dto.Recommendations ?? string.Empty;
+        existingReport.IsResolved = dto.IsResolved;
+        existingReport.FollowUpNotes = dto.FollowUpNotes;
+        existingReport.UpdatedAt = DateTime.UtcNow;
+
+        _context.TicketReports.Update(existingReport);
+        await _context.SaveChangesAsync();
+
+        await LogActivityAsync(ticketId, technicianUserId, "Report Updated", null, null);
+
+        return MapToTicketReportResponseDto(existingReport, technician);
+    }
+
+    // Create new report
+    var report = new TicketReport
+    {
+        Id = Guid.NewGuid(),
+        TicketId = ticketId,
+        TechnicianUserId = technicianUserId,
+        WorkSummary = dto.WorkSummary,
+        ResolutionSteps = dto.ResolutionSteps,
+        PartsUsed = dto.PartsUsed ?? string.Empty,
+        TimeSpent = dto.TimeSpent,
+        Recommendations = dto.Recommendations ?? string.Empty,
+        IsResolved = dto.IsResolved,
+        FollowUpNotes = dto.FollowUpNotes,
+        SubmittedAt = DateTime.UtcNow
+    };
+
+    await _context.TicketReports.AddAsync(report);
+    await _context.SaveChangesAsync();
+
+    await LogActivityAsync(ticketId, technicianUserId, "Report Submitted", null, $"Time spent: {dto.TimeSpent}");
+
+    return MapToTicketReportResponseDto(report, technician);
 }
+
+/// <summary>
+/// Get the resolution report for a ticket (returns null if no report exists)
+/// </summary>
+public async Task<TicketReportResponseDto?> GetTicketReportAsync(Guid ticketId)
+{
+    var report = await _context.TicketReports
+        .Include(r => r.TechnicianUser)
+        .FirstOrDefaultAsync(r => r.TicketId == ticketId);
+
+    if (report == null)
+        return null;
+
+    return MapToTicketReportResponseDto(report, report.TechnicianUser);
+}
+
+/// <summary>
+/// Check if a user is allowed to download the ticket as PDF.
+/// Rules:
+/// - SuperAdmin: all tickets
+/// - Support: all tickets (they triage everything)
+/// - TeamLead: their team's tickets + tickets they created
+/// - Technician: tickets assigned to them
+/// - Customer: tickets they created
+/// </summary>
+public async Task<bool> CanUserDownloadTicketAsync(Guid ticketId, Guid userId, UserRole userRole)
+{
+    if (userRole == UserRole.SuperAdmin || userRole == UserRole.Support)
+        return true;
+
+    var ticket = await _context.Tickets
+        .AsNoTracking()
+        .FirstOrDefaultAsync(t => t.Id == ticketId);
+
+    if (ticket == null)
+        return false;
+
+    return userRole switch
+    {
+        UserRole.Customer => ticket.CreatedByUserId == userId,
+        UserRole.Technician => ticket.AssignedToUserId == userId,
+        UserRole.TeamLead =>
+            ticket.CreatedByUserId == userId ||
+            (ticket.AssignedToUserId.HasValue &&
+             _context.Users.Any(u => u.Id == ticket.AssignedToUserId.Value && u.TeamLeadUserId == userId)),
+        _ => false
+    };
+}
+
+/// <summary>
+/// Check if a user is allowed to view/download the technician report.
+/// Rules:
+/// - SuperAdmin: all reports
+/// - Support: all reports (they oversee the process)
+/// - TeamLead: reports for tickets assigned to their team
+/// - Technician: their own reports only
+/// - Customer: NO access to technician reports (internal document)
+/// </summary>
+public async Task<bool> CanUserViewReportAsync(Guid ticketId, Guid userId, UserRole userRole)
+{
+    // Customers don't see internal reports
+    if (userRole == UserRole.Customer)
+        return false;
+
+    if (userRole == UserRole.SuperAdmin || userRole == UserRole.Support)
+        return true;
+
+    var ticket = await _context.Tickets
+        .AsNoTracking()
+        .FirstOrDefaultAsync(t => t.Id == ticketId);
+
+    if (ticket == null)
+        return false;
+
+    // TeamLead: can see report if ticket is assigned to their team
+    if (userRole == UserRole.TeamLead)
+    {
+        return ticket.CreatedByUserId == userId ||
+               (ticket.AssignedToUserId.HasValue &&
+                await _context.Users.AnyAsync(u =>
+                    u.Id == ticket.AssignedToUserId.Value &&
+                    u.TeamLeadUserId == userId));
+    }
+
+    // Technician: only their own reports
+    if (userRole == UserRole.Technician)
+    {
+        return await _context.TicketReports.AnyAsync(r =>
+            r.TicketId == ticketId && r.TechnicianUserId == userId);
+    }
+
+    return false;
+}
+
+#endregion
+
+// ==================== HELPER: Mapping method ====================
+
+/// <summary>
+/// Map TicketReport entity to TicketReportResponseDto
+/// </summary>
+private static TicketReportResponseDto MapToTicketReportResponseDto(TicketReport report, Users technician)
+{
+    return new TicketReportResponseDto
+    {
+        Id = report.Id,
+        TicketId = report.TicketId,
+        TechnicianUserId = report.TechnicianUserId,
+        TechnicianName = $"{technician.FirstName} {technician.LastName}",
+        WorkSummary = report.WorkSummary,
+        ResolutionSteps = report.ResolutionSteps,
+        PartsUsed = report.PartsUsed,
+        TimeSpent = report.TimeSpent,
+        Recommendations = report.Recommendations,
+        IsResolved = report.IsResolved,
+        FollowUpNotes = report.FollowUpNotes,
+        SubmittedAt = report.SubmittedAt,
+        UpdatedAt = report.UpdatedAt
+    };
+}
+
+}
+
+
+
+
