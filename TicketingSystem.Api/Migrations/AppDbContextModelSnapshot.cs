@@ -22,6 +22,40 @@ namespace TicketingSystem.Api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("TicketingSystem.Api.Models.NotificationLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Channel")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<string>("EventKey")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Recipient")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventKey")
+                        .IsUnique();
+
+                    b.ToTable("NotificationLogs");
+                });
+
             modelBuilder.Entity("TicketingSystem.Api.Models.TicketActivityLog", b =>
                 {
                     b.Property<Guid>("Id")
@@ -418,6 +452,40 @@ namespace TicketingSystem.Api.Migrations
                         },
                         new
                         {
+                            Id = new Guid("550e8400-e29b-41d4-a716-446655440002"),
+                            CreatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "teamlead2@ticketing.com",
+                            EmailVerificationOTP = "",
+                            FirstName = "Mary",
+                            InvitedByUserId = new Guid("550e8400-e29b-41d4-a716-446655440000"),
+                            IsActive = true,
+                            IsEmailVerified = true,
+                            LastName = "Wanjiku",
+                            PasswordHash = "$2a$12$Sr60RhXPVBGoDobfKme1gu52ga9V97PKJ9VHdXEisTdnM271HNjj.",
+                            PhoneNumber = "0722000002",
+                            Role = 2,
+                            Status = 2,
+                            UpdatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("550e8400-e29b-41d4-a716-446655440003"),
+                            CreatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "teamlead3@ticketing.com",
+                            EmailVerificationOTP = "",
+                            FirstName = "Peter",
+                            InvitedByUserId = new Guid("550e8400-e29b-41d4-a716-446655440000"),
+                            IsActive = true,
+                            IsEmailVerified = true,
+                            LastName = "Omondi",
+                            PasswordHash = "$2a$12$Sr60RhXPVBGoDobfKme1gu52ga9V97PKJ9VHdXEisTdnM271HNjj.",
+                            PhoneNumber = "0722000003",
+                            Role = 2,
+                            Status = 2,
+                            UpdatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
                             Id = new Guid("550e8400-e29b-41d4-a716-446655440010"),
                             CreatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "technician1@ticketing.com",
@@ -432,6 +500,96 @@ namespace TicketingSystem.Api.Migrations
                             Role = 4,
                             Status = 2,
                             TeamLeadUserId = new Guid("550e8400-e29b-41d4-a716-446655440001"),
+                            UpdatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("550e8400-e29b-41d4-a716-446655440011"),
+                            CreatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "technician2@ticketing.com",
+                            EmailVerificationOTP = "",
+                            FirstName = "Alice",
+                            InvitedByUserId = new Guid("550e8400-e29b-41d4-a716-446655440001"),
+                            IsActive = true,
+                            IsEmailVerified = true,
+                            LastName = "Mwangi",
+                            PasswordHash = "$2a$12$Sr60RhXPVBGoDobfKme1gu52ga9V97PKJ9VHdXEisTdnM271HNjj.",
+                            PhoneNumber = "0722000011",
+                            Role = 4,
+                            Status = 2,
+                            TeamLeadUserId = new Guid("550e8400-e29b-41d4-a716-446655440001"),
+                            UpdatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("550e8400-e29b-41d4-a716-446655440012"),
+                            CreatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "technician3@ticketing.com",
+                            EmailVerificationOTP = "",
+                            FirstName = "James",
+                            InvitedByUserId = new Guid("550e8400-e29b-41d4-a716-446655440001"),
+                            IsActive = true,
+                            IsEmailVerified = true,
+                            LastName = "Kariuki",
+                            PasswordHash = "$2a$12$Sr60RhXPVBGoDobfKme1gu52ga9V97PKJ9VHdXEisTdnM271HNjj.",
+                            PhoneNumber = "0722000012",
+                            Role = 4,
+                            Status = 2,
+                            TeamLeadUserId = new Guid("550e8400-e29b-41d4-a716-446655440001"),
+                            UpdatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("550e8400-e29b-41d4-a716-446655440013"),
+                            CreatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "technician4@ticketing.com",
+                            EmailVerificationOTP = "",
+                            FirstName = "Susan",
+                            InvitedByUserId = new Guid("550e8400-e29b-41d4-a716-446655440002"),
+                            IsActive = true,
+                            IsEmailVerified = true,
+                            LastName = "Njeri",
+                            PasswordHash = "$2a$12$Sr60RhXPVBGoDobfKme1gu52ga9V97PKJ9VHdXEisTdnM271HNjj.",
+                            PhoneNumber = "0722000013",
+                            Role = 4,
+                            Status = 2,
+                            TeamLeadUserId = new Guid("550e8400-e29b-41d4-a716-446655440002"),
+                            UpdatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("550e8400-e29b-41d4-a716-446655440014"),
+                            CreatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "technician5@ticketing.com",
+                            EmailVerificationOTP = "",
+                            FirstName = "David",
+                            InvitedByUserId = new Guid("550e8400-e29b-41d4-a716-446655440002"),
+                            IsActive = true,
+                            IsEmailVerified = true,
+                            LastName = "Otieno",
+                            PasswordHash = "$2a$12$Sr60RhXPVBGoDobfKme1gu52ga9V97PKJ9VHdXEisTdnM271HNjj.",
+                            PhoneNumber = "0722000014",
+                            Role = 4,
+                            Status = 2,
+                            TeamLeadUserId = new Guid("550e8400-e29b-41d4-a716-446655440002"),
+                            UpdatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("550e8400-e29b-41d4-a716-446655440015"),
+                            CreatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "technician6@ticketing.com",
+                            EmailVerificationOTP = "",
+                            FirstName = "Grace",
+                            InvitedByUserId = new Guid("550e8400-e29b-41d4-a716-446655440003"),
+                            IsActive = true,
+                            IsEmailVerified = true,
+                            LastName = "Achieng",
+                            PasswordHash = "$2a$12$Sr60RhXPVBGoDobfKme1gu52ga9V97PKJ9VHdXEisTdnM271HNjj.",
+                            PhoneNumber = "0722000015",
+                            Role = 4,
+                            Status = 2,
+                            TeamLeadUserId = new Guid("550e8400-e29b-41d4-a716-446655440003"),
                             UpdatedAt = new DateTime(2025, 3, 16, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new

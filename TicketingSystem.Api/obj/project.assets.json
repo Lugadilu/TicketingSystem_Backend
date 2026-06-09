@@ -2,6 +2,101 @@
   "version": 3,
   "targets": {
     "net10.0": {
+      "AWSSDK.Core/4.0.3.12": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "AWSSDK.SimpleEmailV2/4.0.11.5": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[4.0.3.12, 5.0.0)"
+        },
+        "compile": {
+          "lib/net8.0/AWSSDK.SimpleEmailV2.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.SimpleEmailV2.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "AWSSDK.SimpleNotificationService/4.0.2.16": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[4.0.3.12, 5.0.0)"
+        },
+        "compile": {
+          "lib/net8.0/AWSSDK.SimpleNotificationService.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.SimpleNotificationService.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Azure.Communication.Email/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Azure.Core": "1.49.0"
+        },
+        "compile": {
+          "lib/net8.0/Azure.Communication.Email.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Communication.Email.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Azure.Communication.Sms/1.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Azure.Core": "1.47.3"
+        },
+        "compile": {
+          "lib/net8.0/Azure.Communication.Sms.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Communication.Sms.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Azure.Core/1.49.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "8.0.0",
+          "System.ClientModel": "1.7.0",
+          "System.Memory.Data": "8.0.1"
+        },
+        "compile": {
+          "lib/net8.0/Azure.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Core.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "BCrypt.Net-Next/4.2.0": {
         "type": "package",
         "compile": {
@@ -21,6 +116,71 @@
         "runtime": {
           "lib/net6.0/BouncyCastle.Cryptography.dll": {
             "related": ".xml"
+          }
+        }
+      },
+      "dotAPNS/4.6.0": {
+        "type": "package",
+        "dependencies": {
+          "JetBrains.Annotations": "2022.1.0",
+          "Newtonsoft.Json": "13.0.1",
+          "Portable.BouncyCastle": "1.9.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/dotAPNS.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/dotAPNS.dll": {}
+        }
+      },
+      "FirebaseAdmin/3.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -99,6 +259,19 @@
           "lib/net461/itextsharp.dll": {}
         }
       },
+      "JetBrains.Annotations/2022.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/JetBrains.Annotations.dll": {
+            "related": ".deps.json;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/JetBrains.Annotations.dll": {
+            "related": ".deps.json;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authentication.JwtBearer/10.0.8": {
         "type": "package",
         "dependencies": {
@@ -138,6 +311,35 @@
         ],
         "build": {
           "build/Microsoft.AspNetCore.OpenApi.targets": {}
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.Memory/10.0.7": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/Microsoft.Bcl.Memory.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Bcl.Memory.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
         }
       },
       "Microsoft.Build.Framework/18.0.2": {
@@ -752,6 +954,560 @@
           }
         }
       },
+      "Portable.BouncyCastle/1.9.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "RecurPixel.Notify.Core/0.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Core.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Dashboard/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Dashboard.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Dashboard.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "RecurPixel.Notify.Dashboard.EfCore/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "8.0.11",
+          "Microsoft.EntityFrameworkCore.Relational": "8.0.11",
+          "RecurPixel.Notify.Dashboard": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Dashboard.EfCore.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Dashboard.EfCore.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Discord/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Discord.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Discord.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Email.AwsSes/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.SimpleEmailV2": "4.0.11.5",
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Email.AwsSes.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.AwsSes.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Email.AzureCommEmail/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Azure.Communication.Email": "1.1.0",
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Email.AzureCommEmail.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.AzureCommEmail.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Email.Mailgun/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Email.Mailgun.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.Mailgun.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Email.Postmark/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Email.Postmark.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.Postmark.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Email.Resend/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Email.Resend.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.Resend.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Email.SendGrid/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0",
+          "SendGrid": "9.29.3"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Email.SendGrid.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.SendGrid.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Email.Smtp/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Email.Smtp.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.Smtp.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Facebook/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Facebook.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Facebook.dll": {}
+        }
+      },
+      "RecurPixel.Notify.InApp/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.InApp.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.InApp.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Line/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Line.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Line.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Mattermost/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Mattermost.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Mattermost.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Orchestrator/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Orchestrator.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Orchestrator.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Push.Apns/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0",
+          "dotAPNS": "4.6.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Push.Apns.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Push.Apns.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Push.Expo/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Push.Expo.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Push.Expo.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Push.Fcm/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "FirebaseAdmin": "3.4.0",
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Push.Fcm.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Push.Fcm.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Push.OneSignal/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Push.OneSignal.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Push.OneSignal.dll": {}
+        }
+      },
+      "RecurPixel.Notify.RocketChat/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.RocketChat.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.RocketChat.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Sdk/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0",
+          "RecurPixel.Notify.Dashboard": "0.3.0",
+          "RecurPixel.Notify.Dashboard.EfCore": "0.3.0",
+          "RecurPixel.Notify.Discord": "0.3.0",
+          "RecurPixel.Notify.Email.AwsSes": "0.3.0",
+          "RecurPixel.Notify.Email.AzureCommEmail": "0.3.0",
+          "RecurPixel.Notify.Email.Mailgun": "0.3.0",
+          "RecurPixel.Notify.Email.Postmark": "0.3.0",
+          "RecurPixel.Notify.Email.Resend": "0.3.0",
+          "RecurPixel.Notify.Email.SendGrid": "0.3.0",
+          "RecurPixel.Notify.Email.Smtp": "0.3.0",
+          "RecurPixel.Notify.Facebook": "0.3.0",
+          "RecurPixel.Notify.InApp": "0.3.0",
+          "RecurPixel.Notify.Line": "0.3.0",
+          "RecurPixel.Notify.Mattermost": "0.3.0",
+          "RecurPixel.Notify.Orchestrator": "0.3.0",
+          "RecurPixel.Notify.Push.Apns": "0.3.0",
+          "RecurPixel.Notify.Push.Expo": "0.3.0",
+          "RecurPixel.Notify.Push.Fcm": "0.3.0",
+          "RecurPixel.Notify.Push.OneSignal": "0.3.0",
+          "RecurPixel.Notify.RocketChat": "0.3.0",
+          "RecurPixel.Notify.Slack": "0.3.0",
+          "RecurPixel.Notify.Sms.AwsSns": "0.3.0",
+          "RecurPixel.Notify.Sms.AzureCommSms": "0.3.0",
+          "RecurPixel.Notify.Sms.MessageBird": "0.3.0",
+          "RecurPixel.Notify.Sms.Msg91": "0.3.0",
+          "RecurPixel.Notify.Sms.Plivo": "0.3.0",
+          "RecurPixel.Notify.Sms.Sinch": "0.3.0",
+          "RecurPixel.Notify.Sms.Twilio": "0.3.0",
+          "RecurPixel.Notify.Sms.Vonage": "0.3.0",
+          "RecurPixel.Notify.Teams": "0.3.0",
+          "RecurPixel.Notify.Telegram": "0.3.0",
+          "RecurPixel.Notify.Viber": "0.3.0",
+          "RecurPixel.Notify.WhatsApp.MetaCloud": "0.3.0",
+          "RecurPixel.Notify.WhatsApp.Msg91": "0.3.0",
+          "RecurPixel.Notify.WhatsApp.Twilio": "0.3.0",
+          "RecurPixel.Notify.WhatsApp.Vonage": "0.3.0"
+        }
+      },
+      "RecurPixel.Notify.Slack/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Slack.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Slack.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Sms.AwsSns/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.SimpleNotificationService": "4.0.2.16",
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Sms.AwsSns.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.AwsSns.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Sms.AzureCommSms/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Azure.Communication.Sms": "1.0.2",
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Sms.AzureCommSms.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.AzureCommSms.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Sms.MessageBird/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Sms.MessageBird.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.MessageBird.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Sms.Msg91/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Msg91.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Msg91.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Sms.Plivo/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Plivo.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Plivo.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Sms.Sinch/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Sinch.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Sinch.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Sms.Twilio/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.Memory": "10.0.7",
+          "RecurPixel.Notify.Core": "0.3.0",
+          "Twilio": "7.14.3"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Twilio.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Twilio.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Sms.Vonage/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Vonage.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Vonage.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Teams/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Teams.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Teams.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Telegram/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Telegram.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Telegram.dll": {}
+        }
+      },
+      "RecurPixel.Notify.Viber/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.Viber.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Viber.dll": {}
+        }
+      },
+      "RecurPixel.Notify.WhatsApp.MetaCloud/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.MetaCloud.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.MetaCloud.dll": {}
+        }
+      },
+      "RecurPixel.Notify.WhatsApp.Msg91/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.Msg91.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.Msg91.dll": {}
+        }
+      },
+      "RecurPixel.Notify.WhatsApp.Twilio/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.Memory": "10.0.7",
+          "RecurPixel.Notify.Core": "0.3.0",
+          "Twilio": "7.14.3"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.Twilio.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.Twilio.dll": {}
+        }
+      },
+      "RecurPixel.Notify.WhatsApp.Vonage/0.3.0": {
+        "type": "package",
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "compile": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.Vonage.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.Vonage.dll": {}
+        }
+      },
+      "SendGrid/9.29.3": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "starkbank-ecdsa": "[1.3.3, 2.0.0)"
+        },
+        "compile": {
+          "lib/netstandard2.0/SendGrid.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/SendGrid.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "starkbank-ecdsa/1.3.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/StarkbankEcdsa.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/StarkbankEcdsa.dll": {}
+        }
+      },
+      "System.ClientModel/1.7.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Memory.Data": "8.0.1"
+        },
+        "compile": {
+          "lib/net9.0/System.ClientModel.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/System.ClientModel.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.CodeDom/7.0.0": {
         "type": "package",
         "compile": {
@@ -919,10 +1675,186 @@
             "rid": "win"
           }
         }
+      },
+      "System.Memory.Data/8.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Memory.Data.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Memory.Data.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "Twilio/7.14.9": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.IdentityModel.Tokens": "8.3.1",
+          "Newtonsoft.Json": "13.0.1",
+          "System.IdentityModel.Tokens.Jwt": "8.3.1"
+        },
+        "compile": {
+          "lib/net6.0/Twilio.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Twilio.dll": {
+            "related": ".xml"
+          }
+        }
       }
     }
   },
   "libraries": {
+    "AWSSDK.Core/4.0.3.12": {
+      "sha512": "/FyE96xV2qJLgJN++ZW8M7udRf2NBLoku9AkEHLQqpH9uv0r0QQK2sw2pF3OvzKnuKsyp+Mx5wYwgFXPLnBb9g==",
+      "type": "package",
+      "path": "awssdk.core/4.0.3.12",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "awssdk.core.4.0.3.12.nupkg.sha512",
+        "awssdk.core.nuspec",
+        "images/AWSLogo.png",
+        "lib/net472/AWSSDK.Core.dll",
+        "lib/net472/AWSSDK.Core.pdb",
+        "lib/net472/AWSSDK.Core.xml",
+        "lib/net8.0/AWSSDK.Core.dll",
+        "lib/net8.0/AWSSDK.Core.pdb",
+        "lib/net8.0/AWSSDK.Core.xml",
+        "lib/netcoreapp3.1/AWSSDK.Core.dll",
+        "lib/netcoreapp3.1/AWSSDK.Core.pdb",
+        "lib/netcoreapp3.1/AWSSDK.Core.xml",
+        "lib/netstandard2.0/AWSSDK.Core.dll",
+        "lib/netstandard2.0/AWSSDK.Core.pdb",
+        "lib/netstandard2.0/AWSSDK.Core.xml",
+        "tools/account-management.ps1"
+      ]
+    },
+    "AWSSDK.SimpleEmailV2/4.0.11.5": {
+      "sha512": "NCid0P/maAfc1lemnbC6siw0fBDq6n+ZMr+ST0fiPQdhhEnuUwECV5zDU8bVCy8s6BCT9erp/vMNU160SxhW4A==",
+      "type": "package",
+      "path": "awssdk.simpleemailv2/4.0.11.5",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.SimpleEmailV2.CodeAnalysis.dll",
+        "analyzers/dotnet/cs/SharedAnalysisCode.dll",
+        "awssdk.simpleemailv2.4.0.11.5.nupkg.sha512",
+        "awssdk.simpleemailv2.nuspec",
+        "images/AWSLogo.png",
+        "lib/net472/AWSSDK.SimpleEmailV2.dll",
+        "lib/net472/AWSSDK.SimpleEmailV2.pdb",
+        "lib/net472/AWSSDK.SimpleEmailV2.xml",
+        "lib/net8.0/AWSSDK.SimpleEmailV2.dll",
+        "lib/net8.0/AWSSDK.SimpleEmailV2.pdb",
+        "lib/net8.0/AWSSDK.SimpleEmailV2.xml",
+        "lib/netcoreapp3.1/AWSSDK.SimpleEmailV2.dll",
+        "lib/netcoreapp3.1/AWSSDK.SimpleEmailV2.pdb",
+        "lib/netcoreapp3.1/AWSSDK.SimpleEmailV2.xml",
+        "lib/netstandard2.0/AWSSDK.SimpleEmailV2.dll",
+        "lib/netstandard2.0/AWSSDK.SimpleEmailV2.pdb",
+        "lib/netstandard2.0/AWSSDK.SimpleEmailV2.xml",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "AWSSDK.SimpleNotificationService/4.0.2.16": {
+      "sha512": "3gdOmld1p6ZyXKCsbIrEyo2zbYEseC0PvwNimLxj9vA/o5YGj5yFy2Ys79r7/6980OnwCM0W8rPe0i5v64RrHg==",
+      "type": "package",
+      "path": "awssdk.simplenotificationservice/4.0.2.16",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.SimpleNotificationService.CodeAnalysis.dll",
+        "analyzers/dotnet/cs/SharedAnalysisCode.dll",
+        "awssdk.simplenotificationservice.4.0.2.16.nupkg.sha512",
+        "awssdk.simplenotificationservice.nuspec",
+        "images/AWSLogo.png",
+        "lib/net472/AWSSDK.SimpleNotificationService.dll",
+        "lib/net472/AWSSDK.SimpleNotificationService.pdb",
+        "lib/net472/AWSSDK.SimpleNotificationService.xml",
+        "lib/net8.0/AWSSDK.SimpleNotificationService.dll",
+        "lib/net8.0/AWSSDK.SimpleNotificationService.pdb",
+        "lib/net8.0/AWSSDK.SimpleNotificationService.xml",
+        "lib/netcoreapp3.1/AWSSDK.SimpleNotificationService.dll",
+        "lib/netcoreapp3.1/AWSSDK.SimpleNotificationService.pdb",
+        "lib/netcoreapp3.1/AWSSDK.SimpleNotificationService.xml",
+        "lib/netstandard2.0/AWSSDK.SimpleNotificationService.dll",
+        "lib/netstandard2.0/AWSSDK.SimpleNotificationService.pdb",
+        "lib/netstandard2.0/AWSSDK.SimpleNotificationService.xml",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "Azure.Communication.Email/1.1.0": {
+      "sha512": "yR0QWbrvM/RvOxrkFWaPqzltAiF/MGoVhjm++UkEpXvN00Brc/LevJXeg2BUVbIucoxx+kKW7HTAzGKspFh8Vg==",
+      "type": "package",
+      "path": "azure.communication.email/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "CHANGELOG.md",
+        "README.md",
+        "azure.communication.email.1.1.0.nupkg.sha512",
+        "azure.communication.email.nuspec",
+        "azureicon.png",
+        "lib/net8.0/Azure.Communication.Email.dll",
+        "lib/net8.0/Azure.Communication.Email.xml",
+        "lib/netstandard2.0/Azure.Communication.Email.dll",
+        "lib/netstandard2.0/Azure.Communication.Email.xml"
+      ]
+    },
+    "Azure.Communication.Sms/1.0.2": {
+      "sha512": "EOgM6NjodrOTB8ej7aLP8PmW5m1ZzAOXIv3gu+7QhYL5p/FvmsGHPozrMKVeZPsIEB50gZQg7gbDKvtpAOvDbg==",
+      "type": "package",
+      "path": "azure.communication.sms/1.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "CHANGELOG.md",
+        "README.md",
+        "azure.communication.sms.1.0.2.nupkg.sha512",
+        "azure.communication.sms.nuspec",
+        "azureicon.png",
+        "lib/net8.0/Azure.Communication.Sms.dll",
+        "lib/net8.0/Azure.Communication.Sms.xml",
+        "lib/netstandard2.0/Azure.Communication.Sms.dll",
+        "lib/netstandard2.0/Azure.Communication.Sms.xml"
+      ]
+    },
+    "Azure.Core/1.49.0": {
+      "sha512": "wmY5VEEVTBJN+8KVB6qSVZYDCMpHs1UXooOijx/NH7OsMtK92NlxhPBpPyh4cR+07R/zyDGvA5+Fss4TpwlO+g==",
+      "type": "package",
+      "path": "azure.core/1.49.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "CHANGELOG.md",
+        "README.md",
+        "azure.core.1.49.0.nupkg.sha512",
+        "azure.core.nuspec",
+        "azureicon.png",
+        "lib/net462/Azure.Core.dll",
+        "lib/net462/Azure.Core.xml",
+        "lib/net472/Azure.Core.dll",
+        "lib/net472/Azure.Core.xml",
+        "lib/net8.0/Azure.Core.dll",
+        "lib/net8.0/Azure.Core.xml",
+        "lib/netstandard2.0/Azure.Core.dll",
+        "lib/netstandard2.0/Azure.Core.xml"
+      ]
+    },
     "BCrypt.Net-Next/4.2.0": {
       "sha512": "gwLD2KfCuwQesP17aVh4h6lpiMPEVt5Lbpndo0ej903hNUUTtyxt3ARdDjmuydBRTAUICc7OVKVbaOvc6SQYXA==",
       "type": "package",
@@ -966,6 +1898,76 @@
         "lib/netstandard2.0/BouncyCastle.Cryptography.dll",
         "lib/netstandard2.0/BouncyCastle.Cryptography.xml",
         "packageIcon.png"
+      ]
+    },
+    "dotAPNS/4.6.0": {
+      "sha512": "51fnJLyNfqv1E3CekBgejqxfC0xelgfoUXHFJMNNkfJN9xuZszfqrR3f8707BQBCspo8d95NZVs1TH9DJqVmRA==",
+      "type": "package",
+      "path": "dotapns/4.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dotapns.4.6.0.nupkg.sha512",
+        "dotapns.nuspec",
+        "lib/net462/dotAPNS.dll",
+        "lib/netstandard2.0/dotAPNS.dll",
+        "lib/netstandard2.1/dotAPNS.dll"
+      ]
+    },
+    "FirebaseAdmin/3.4.0": {
+      "sha512": "sQyVEOYRe4HSSmRCJQhKr33DxZk10lpDE2otdTgNkqPn4BRul2JG7TCQC7N7X0wO9ShnPLbVS4xuSUHlaPBbug==",
+      "type": "package",
+      "path": "firebaseadmin/3.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "firebaseadmin.3.4.0.nupkg.sha512",
+        "firebaseadmin.nuspec",
+        "lib/net462/FirebaseAdmin.dll",
+        "lib/net462/FirebaseAdmin.xml",
+        "lib/net6.0/FirebaseAdmin.dll",
+        "lib/net6.0/FirebaseAdmin.xml",
+        "lib/netstandard2.0/FirebaseAdmin.dll",
+        "lib/netstandard2.0/FirebaseAdmin.xml"
+      ]
+    },
+    "Google.Api.Gax/4.8.0": {
+      "sha512": "xlV8Jq/G5CQAA3PwYAuKGjfzGOP7AvjhREnE6vgZlzxREGYchHudZWa2PWSqFJL+MBtz9YgitLpRogANN3CVvg==",
+      "type": "package",
+      "path": "google.api.gax/4.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.api.gax.4.8.0.nupkg.sha512",
+        "google.api.gax.nuspec",
+        "lib/net462/Google.Api.Gax.dll",
+        "lib/net462/Google.Api.Gax.pdb",
+        "lib/net462/Google.Api.Gax.xml",
+        "lib/netstandard2.0/Google.Api.Gax.dll",
+        "lib/netstandard2.0/Google.Api.Gax.pdb",
+        "lib/netstandard2.0/Google.Api.Gax.xml"
+      ]
+    },
+    "Google.Api.Gax.Rest/4.8.0": {
+      "sha512": "zaA5LZ2VvGj/wwIzRB68swr7khi2kWNgqWvsB0fYtScIAl3kGkGtqiBcx63H1YLeKr5xau1866bFjTeReH6FSQ==",
+      "type": "package",
+      "path": "google.api.gax.rest/4.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.api.gax.rest.4.8.0.nupkg.sha512",
+        "google.api.gax.rest.nuspec",
+        "lib/net462/Google.Api.Gax.Rest.dll",
+        "lib/net462/Google.Api.Gax.Rest.pdb",
+        "lib/net462/Google.Api.Gax.Rest.xml",
+        "lib/netstandard2.0/Google.Api.Gax.Rest.dll",
+        "lib/netstandard2.0/Google.Api.Gax.Rest.pdb",
+        "lib/netstandard2.0/Google.Api.Gax.Rest.xml"
       ]
     },
     "Google.Apis/1.74.0": {
@@ -1068,6 +2070,28 @@
         "notice.txt"
       ]
     },
+    "JetBrains.Annotations/2022.1.0": {
+      "sha512": "ASfpoFJxiRsC9Xc4TWuPM41Zb/gl64xwfMOhnOZ3RnVWGYIZchjpWQV5zshJgoc/ZxVtgjaF7b577lURj7E6ig==",
+      "type": "package",
+      "path": "jetbrains.annotations/2022.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "jetbrains.annotations.2022.1.0.nupkg.sha512",
+        "jetbrains.annotations.nuspec",
+        "lib/net20/JetBrains.Annotations.dll",
+        "lib/net20/JetBrains.Annotations.xml",
+        "lib/netstandard1.0/JetBrains.Annotations.deps.json",
+        "lib/netstandard1.0/JetBrains.Annotations.dll",
+        "lib/netstandard1.0/JetBrains.Annotations.xml",
+        "lib/netstandard2.0/JetBrains.Annotations.deps.json",
+        "lib/netstandard2.0/JetBrains.Annotations.dll",
+        "lib/netstandard2.0/JetBrains.Annotations.xml",
+        "lib/portable40-net40+sl5+win8+wp8+wpa81/JetBrains.Annotations.dll",
+        "lib/portable40-net40+sl5+win8+wp8+wpa81/JetBrains.Annotations.xml"
+      ]
+    },
     "Microsoft.AspNetCore.Authentication.JwtBearer/10.0.8": {
       "sha512": "oGnE+X/SN6jdqao9WOkOIfyZ5+a0AtluJWy1Mxndq+kcWG6sx5k6l6tucu8/wJ7o9fHfLgVCzm/c4v/KVgVk6w==",
       "type": "package",
@@ -1100,6 +2124,61 @@
         "lib/net10.0/Microsoft.AspNetCore.OpenApi.xml",
         "microsoft.aspnetcore.openapi.10.0.1.nupkg.sha512",
         "microsoft.aspnetcore.openapi.nuspec"
+      ]
+    },
+    "Microsoft.Bcl.AsyncInterfaces/8.0.0": {
+      "sha512": "3WA9q9yVqJp222P3x1wYIGDAkpjAku0TMUaaQV22g6L67AI0LdOIrVS7Ht2vJfLHGSPVuqN94vIr15qn+HEkHw==",
+      "type": "package",
+      "path": "microsoft.bcl.asyncinterfaces/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Bcl.AsyncInterfaces.targets",
+        "buildTransitive/net462/_._",
+        "lib/net462/Microsoft.Bcl.AsyncInterfaces.dll",
+        "lib/net462/Microsoft.Bcl.AsyncInterfaces.xml",
+        "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll",
+        "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.xml",
+        "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll",
+        "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.xml",
+        "microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
+        "microsoft.bcl.asyncinterfaces.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "Microsoft.Bcl.Memory/10.0.7": {
+      "sha512": "+0MJLOVIO64hZuP8vwdIBbF8QmOw8ZK/1PXq6h+981OrRaWo6e8PmUajbEO7fuKfmaDxasxj0sQPZJI3Dewpig==",
+      "type": "package",
+      "path": "microsoft.bcl.memory/10.0.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Bcl.Memory.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Bcl.Memory.targets",
+        "lib/net10.0/Microsoft.Bcl.Memory.dll",
+        "lib/net10.0/Microsoft.Bcl.Memory.xml",
+        "lib/net462/Microsoft.Bcl.Memory.dll",
+        "lib/net462/Microsoft.Bcl.Memory.xml",
+        "lib/net8.0/Microsoft.Bcl.Memory.dll",
+        "lib/net8.0/Microsoft.Bcl.Memory.xml",
+        "lib/net9.0/Microsoft.Bcl.Memory.dll",
+        "lib/net9.0/Microsoft.Bcl.Memory.xml",
+        "lib/netstandard2.0/Microsoft.Bcl.Memory.dll",
+        "lib/netstandard2.0/Microsoft.Bcl.Memory.xml",
+        "lib/netstandard2.1/Microsoft.Bcl.Memory.dll",
+        "lib/netstandard2.1/Microsoft.Bcl.Memory.xml",
+        "microsoft.bcl.memory.10.0.7.nupkg.sha512",
+        "microsoft.bcl.memory.nuspec",
+        "useSharedDesignerContext.txt"
       ]
     },
     "Microsoft.Build.Framework/18.0.2": {
@@ -2581,6 +3660,650 @@
         "postgresql.png"
       ]
     },
+    "Portable.BouncyCastle/1.9.0": {
+      "sha512": "eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
+      "type": "package",
+      "path": "portable.bouncycastle/1.9.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/BouncyCastle.Crypto.dll",
+        "lib/net40/BouncyCastle.Crypto.xml",
+        "lib/netstandard2.0/BouncyCastle.Crypto.dll",
+        "lib/netstandard2.0/BouncyCastle.Crypto.xml",
+        "portable.bouncycastle.1.9.0.nupkg.sha512",
+        "portable.bouncycastle.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Core/0.3.0": {
+      "sha512": "gmhiaUoXntXfU8MwqNchOTOjvjj6cIO43kmZjmRgx9OolhVXrVzif2VMstYCTGH0kcp7BODcjCowCWPqbdrTgA==",
+      "type": "package",
+      "path": "recurpixel.notify.core/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Core.dll",
+        "lib/net8.0/RecurPixel.Notify.Core.dll",
+        "lib/netstandard2.1/RecurPixel.Notify.Core.dll",
+        "logo.png",
+        "recurpixel.notify.core.0.3.0.nupkg.sha512",
+        "recurpixel.notify.core.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Dashboard/0.3.0": {
+      "sha512": "4RzvNKY/fSEr38bp8q+3INN00xwdMiiQyGQu2OwtLGgTkT5H2izk+BUFth6zZVdvid8wttqZqEIicM1MkX5lMg==",
+      "type": "package",
+      "path": "recurpixel.notify.dashboard/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Dashboard.dll",
+        "lib/net8.0/RecurPixel.Notify.Dashboard.dll",
+        "logo.png",
+        "recurpixel.notify.dashboard.0.3.0.nupkg.sha512",
+        "recurpixel.notify.dashboard.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Dashboard.EfCore/0.3.0": {
+      "sha512": "dKCEu4/i0D7m+HSop2p+VYr5BPPnx6hJNm/teODXA/OKitdSPDqVpSJFnFzGnMLPsUZVgoRXKcLBZLkijfpBeg==",
+      "type": "package",
+      "path": "recurpixel.notify.dashboard.efcore/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Dashboard.EfCore.dll",
+        "lib/net8.0/RecurPixel.Notify.Dashboard.EfCore.dll",
+        "logo.png",
+        "recurpixel.notify.dashboard.efcore.0.3.0.nupkg.sha512",
+        "recurpixel.notify.dashboard.efcore.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Discord/0.3.0": {
+      "sha512": "eEDdGNYi4dOrdg35menq3bsoWNcf2ES8kmCh1hLdALu/TapPepkDmDtW2iN8CEnyscmGk/ArJyQQosm8eN20Gw==",
+      "type": "package",
+      "path": "recurpixel.notify.discord/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Discord.dll",
+        "lib/net8.0/RecurPixel.Notify.Discord.dll",
+        "logo.png",
+        "recurpixel.notify.discord.0.3.0.nupkg.sha512",
+        "recurpixel.notify.discord.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Email.AwsSes/0.3.0": {
+      "sha512": "xDdemc30tc1WLv3RPBz3wLxWJqSBmJCw/pAPJMsbFD7EblaCVD6vmBljjp3t8CASvnDSlKOE/Sy+o/nBZRmL5g==",
+      "type": "package",
+      "path": "recurpixel.notify.email.awsses/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Email.AwsSes.dll",
+        "lib/net8.0/RecurPixel.Notify.Email.AwsSes.dll",
+        "logo.png",
+        "recurpixel.notify.email.awsses.0.3.0.nupkg.sha512",
+        "recurpixel.notify.email.awsses.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Email.AzureCommEmail/0.3.0": {
+      "sha512": "Xc7sNFlOJ9AyozWn+HmWSSOAGfxTxNpoqgzkydoa9fZfs5DgW08EmWjNRM192b0KD3bJvebeEM2S/rXdJkNEiA==",
+      "type": "package",
+      "path": "recurpixel.notify.email.azurecommemail/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Email.AzureCommEmail.dll",
+        "lib/net8.0/RecurPixel.Notify.Email.AzureCommEmail.dll",
+        "logo.png",
+        "recurpixel.notify.email.azurecommemail.0.3.0.nupkg.sha512",
+        "recurpixel.notify.email.azurecommemail.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Email.Mailgun/0.3.0": {
+      "sha512": "LSVD1gNFM11yV+ymuGocwFsncV/GqQ4mMqGqFefD3wOXITx+9ObhzvsMNI/0oaEH9CMjgqxAfRXt6dkVMDowWg==",
+      "type": "package",
+      "path": "recurpixel.notify.email.mailgun/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Email.Mailgun.dll",
+        "lib/net8.0/RecurPixel.Notify.Email.Mailgun.dll",
+        "logo.png",
+        "recurpixel.notify.email.mailgun.0.3.0.nupkg.sha512",
+        "recurpixel.notify.email.mailgun.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Email.Postmark/0.3.0": {
+      "sha512": "HMvAhr84zC9HPU2BT3fKOHGoe2Oyzg/K+P4SftoOFi183WJQjjhTrgzAcbDasgMswDnvqM2g5dAgphAZhjSNMw==",
+      "type": "package",
+      "path": "recurpixel.notify.email.postmark/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Email.Postmark.dll",
+        "lib/net8.0/RecurPixel.Notify.Email.Postmark.dll",
+        "logo.png",
+        "recurpixel.notify.email.postmark.0.3.0.nupkg.sha512",
+        "recurpixel.notify.email.postmark.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Email.Resend/0.3.0": {
+      "sha512": "EU8OrLdNpBkMfWkogcMz0F7X0QN/dpSJmZ3jy45fyyxjowtZdzgr9ldI1RbYPSNHyZZwkJ8bdz0Y989nPdTmRQ==",
+      "type": "package",
+      "path": "recurpixel.notify.email.resend/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Email.Resend.dll",
+        "lib/net8.0/RecurPixel.Notify.Email.Resend.dll",
+        "logo.png",
+        "recurpixel.notify.email.resend.0.3.0.nupkg.sha512",
+        "recurpixel.notify.email.resend.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Email.SendGrid/0.3.0": {
+      "sha512": "IF2fZcJfhXG5gPc9DKiQkYceKvDmu1aQBsZPCq0ZsMlpBwrVjYPZnfJLswAAZkdQlDis+YO1ohzgu2/d6DMFow==",
+      "type": "package",
+      "path": "recurpixel.notify.email.sendgrid/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Email.SendGrid.dll",
+        "lib/net8.0/RecurPixel.Notify.Email.SendGrid.dll",
+        "logo.png",
+        "recurpixel.notify.email.sendgrid.0.3.0.nupkg.sha512",
+        "recurpixel.notify.email.sendgrid.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Email.Smtp/0.3.0": {
+      "sha512": "/5rDqNzDab9zKOVb4xh93hSULxy03qL3d+3kqIVo63lq/2U3ORQPVH+VgcYQ8bR07+fK07yxydM5xGXNoRaNow==",
+      "type": "package",
+      "path": "recurpixel.notify.email.smtp/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Email.Smtp.dll",
+        "lib/net8.0/RecurPixel.Notify.Email.Smtp.dll",
+        "logo.png",
+        "recurpixel.notify.email.smtp.0.3.0.nupkg.sha512",
+        "recurpixel.notify.email.smtp.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Facebook/0.3.0": {
+      "sha512": "Yr4MRsSwVDsr7U8HdN5rEjvDNc+rWbvv/ucw/z8YBCImeeANvkibTTfmr2h7hXFbNoFtiGhAV5cySPbFRbFbcA==",
+      "type": "package",
+      "path": "recurpixel.notify.facebook/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Facebook.dll",
+        "lib/net8.0/RecurPixel.Notify.Facebook.dll",
+        "logo.png",
+        "recurpixel.notify.facebook.0.3.0.nupkg.sha512",
+        "recurpixel.notify.facebook.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.InApp/0.3.0": {
+      "sha512": "1c0OpWGcltr9DOplBHWDQPWz6HNjh8YD5Ds4dk6uiNjfqzjzEgVXOzN6BiZPjkro4FE7xHACd9q6thjqHWUaDQ==",
+      "type": "package",
+      "path": "recurpixel.notify.inapp/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.InApp.dll",
+        "lib/net8.0/RecurPixel.Notify.InApp.dll",
+        "logo.png",
+        "recurpixel.notify.inapp.0.3.0.nupkg.sha512",
+        "recurpixel.notify.inapp.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Line/0.3.0": {
+      "sha512": "/pSb8pnnIoh8GfapWLnRE/4WZVKTFeCHaTqfx9gN26E1cXn9BuzojCYevZ4JVDMw0MbqCmy+yC3yPnBwrPkEdg==",
+      "type": "package",
+      "path": "recurpixel.notify.line/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Line.dll",
+        "lib/net8.0/RecurPixel.Notify.Line.dll",
+        "logo.png",
+        "recurpixel.notify.line.0.3.0.nupkg.sha512",
+        "recurpixel.notify.line.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Mattermost/0.3.0": {
+      "sha512": "gUaTV3vuSuFzJxKycNbzEMmdVCYn4JGNvIY+1euIdjrx7BQ28oW6zcPp09AZUKOJfhV0zQ2N7BPNfryWKu5bYw==",
+      "type": "package",
+      "path": "recurpixel.notify.mattermost/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Mattermost.dll",
+        "lib/net8.0/RecurPixel.Notify.Mattermost.dll",
+        "logo.png",
+        "recurpixel.notify.mattermost.0.3.0.nupkg.sha512",
+        "recurpixel.notify.mattermost.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Orchestrator/0.3.0": {
+      "sha512": "sMvxQPiD9igmpEk3VSkLx7pM3H4y3jmah1tdUYXYOZSSFuQoM8sQNsk4LdWREFs/x5pr8im9MCsMthx7Yi6NrQ==",
+      "type": "package",
+      "path": "recurpixel.notify.orchestrator/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Orchestrator.dll",
+        "lib/net8.0/RecurPixel.Notify.Orchestrator.dll",
+        "logo.png",
+        "recurpixel.notify.orchestrator.0.3.0.nupkg.sha512",
+        "recurpixel.notify.orchestrator.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Push.Apns/0.3.0": {
+      "sha512": "h4TH2U5URH6hCeW+rHHyx92SgA7nb1IM8DGhfF/AxZjMEH4LJGl221hRzok/8CSvyGt8sPzjdyqg66OsxJlPmg==",
+      "type": "package",
+      "path": "recurpixel.notify.push.apns/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Push.Apns.dll",
+        "lib/net8.0/RecurPixel.Notify.Push.Apns.dll",
+        "logo.png",
+        "recurpixel.notify.push.apns.0.3.0.nupkg.sha512",
+        "recurpixel.notify.push.apns.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Push.Expo/0.3.0": {
+      "sha512": "RZB7AwSIknQXGSvAkuF3WVkD/6WEqACaERaH2lOerTxoOyl1VQGUhEBwIjdwLEuOr7B9TbEsLCCfSWzLSpbXOw==",
+      "type": "package",
+      "path": "recurpixel.notify.push.expo/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Push.Expo.dll",
+        "lib/net8.0/RecurPixel.Notify.Push.Expo.dll",
+        "logo.png",
+        "recurpixel.notify.push.expo.0.3.0.nupkg.sha512",
+        "recurpixel.notify.push.expo.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Push.Fcm/0.3.0": {
+      "sha512": "Wi/eTNHnGVkcAZ57GLPsxpoBtxwRlG88Lu3fWOpd6H0f38MYd46dQD+3Gfdp795mOyvl2hdhjuQuhGIYgqKHng==",
+      "type": "package",
+      "path": "recurpixel.notify.push.fcm/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Push.Fcm.dll",
+        "lib/net8.0/RecurPixel.Notify.Push.Fcm.dll",
+        "logo.png",
+        "recurpixel.notify.push.fcm.0.3.0.nupkg.sha512",
+        "recurpixel.notify.push.fcm.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Push.OneSignal/0.3.0": {
+      "sha512": "8hwI2sg+Drf+fxdJeYqFKyh/QJATZV5sNrqldjJ/+n0tdstMoPvvTWed8itZYumCO8ZSnrb4hu6NyQy7X8dZ+Q==",
+      "type": "package",
+      "path": "recurpixel.notify.push.onesignal/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Push.OneSignal.dll",
+        "lib/net8.0/RecurPixel.Notify.Push.OneSignal.dll",
+        "logo.png",
+        "recurpixel.notify.push.onesignal.0.3.0.nupkg.sha512",
+        "recurpixel.notify.push.onesignal.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.RocketChat/0.3.0": {
+      "sha512": "MI50GafM4fcikSVdZufawja//kLZsz7lQ7RBWlaUxFJu7ScFRMLgY4ML0UPVia004n3N4zSqNrL3pr4z4X0zog==",
+      "type": "package",
+      "path": "recurpixel.notify.rocketchat/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.RocketChat.dll",
+        "lib/net8.0/RecurPixel.Notify.RocketChat.dll",
+        "logo.png",
+        "recurpixel.notify.rocketchat.0.3.0.nupkg.sha512",
+        "recurpixel.notify.rocketchat.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Sdk/0.3.0": {
+      "sha512": "9624KkGDMc6cQFGNd0Se+fjT0igvKHDoSwzUiEgAsQ6K8gh/2sqHgQw6sDkclEag9u6VbDAR9hw9TYcQZuLiGA==",
+      "type": "package",
+      "path": "recurpixel.notify.sdk/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "logo.png",
+        "recurpixel.notify.sdk.0.3.0.nupkg.sha512",
+        "recurpixel.notify.sdk.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Slack/0.3.0": {
+      "sha512": "LsGDkb21kcNpOtkP9a3md7qFsDr8p2TgIG2zVjhujGb+v1W2/mb++e8wrjrswlVIWQwNiIacPZL90GoKgki0Lg==",
+      "type": "package",
+      "path": "recurpixel.notify.slack/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Slack.dll",
+        "lib/net8.0/RecurPixel.Notify.Slack.dll",
+        "logo.png",
+        "recurpixel.notify.slack.0.3.0.nupkg.sha512",
+        "recurpixel.notify.slack.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Sms.AwsSns/0.3.0": {
+      "sha512": "5XVyGqzEmeOBAft+8D0QNGGxsNGTSH3WqqS+/B7WNRFTegJAPFNagE2xblZWb6+ifzNXK/Obd+EQ7/WMn2S46g==",
+      "type": "package",
+      "path": "recurpixel.notify.sms.awssns/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Sms.AwsSns.dll",
+        "lib/net8.0/RecurPixel.Notify.Sms.AwsSns.dll",
+        "logo.png",
+        "recurpixel.notify.sms.awssns.0.3.0.nupkg.sha512",
+        "recurpixel.notify.sms.awssns.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Sms.AzureCommSms/0.3.0": {
+      "sha512": "ajGKa9MaTI5+Q6U8gQ6UD8bMBRWDK434PDt1KXRohcm9S5Pc9u/ZpwGlNRNnP4/+i8Be+z6QBUx47qlyxWFi6g==",
+      "type": "package",
+      "path": "recurpixel.notify.sms.azurecommsms/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Sms.AzureCommSms.dll",
+        "lib/net8.0/RecurPixel.Notify.Sms.AzureCommSms.dll",
+        "logo.png",
+        "recurpixel.notify.sms.azurecommsms.0.3.0.nupkg.sha512",
+        "recurpixel.notify.sms.azurecommsms.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Sms.MessageBird/0.3.0": {
+      "sha512": "qeRYXAb6BArAT4LRmCzVqXy7c3L3F8ZymNeSo7E+G5vURQ42rcaYAsDYImpwZrWWhbCUhKcppmHuf1z2Y6qOtQ==",
+      "type": "package",
+      "path": "recurpixel.notify.sms.messagebird/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Sms.MessageBird.dll",
+        "lib/net8.0/RecurPixel.Notify.Sms.MessageBird.dll",
+        "logo.png",
+        "recurpixel.notify.sms.messagebird.0.3.0.nupkg.sha512",
+        "recurpixel.notify.sms.messagebird.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Sms.Msg91/0.3.0": {
+      "sha512": "uFUtL7MZ2x4pb+UB028fwhxyxqP8rAF03u0mFObli9WqvRI7TlnXSb50/YUxPSeu5ZQDLs9v7QNtdSmKg8xDQw==",
+      "type": "package",
+      "path": "recurpixel.notify.sms.msg91/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Sms.Msg91.dll",
+        "lib/net8.0/RecurPixel.Notify.Sms.Msg91.dll",
+        "logo.png",
+        "recurpixel.notify.sms.msg91.0.3.0.nupkg.sha512",
+        "recurpixel.notify.sms.msg91.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Sms.Plivo/0.3.0": {
+      "sha512": "KALapUL5eIO7vedMQgEZXsxAYBpmYcmxGHLqYGyuW5DOEW00HLoRE3rj43snH+qpmAIfD2t3LI0k+WBcQwITXA==",
+      "type": "package",
+      "path": "recurpixel.notify.sms.plivo/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Sms.Plivo.dll",
+        "lib/net8.0/RecurPixel.Notify.Sms.Plivo.dll",
+        "logo.png",
+        "recurpixel.notify.sms.plivo.0.3.0.nupkg.sha512",
+        "recurpixel.notify.sms.plivo.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Sms.Sinch/0.3.0": {
+      "sha512": "sVbHvFtCfxVzpjfqzwmrPnf1n0nmtqVwk0Rktke+8Wg1pI8ffigzG1N6YlQ4zHFAikQCnxxLLEPsoK3CFJU/Rg==",
+      "type": "package",
+      "path": "recurpixel.notify.sms.sinch/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Sms.Sinch.dll",
+        "lib/net8.0/RecurPixel.Notify.Sms.Sinch.dll",
+        "logo.png",
+        "recurpixel.notify.sms.sinch.0.3.0.nupkg.sha512",
+        "recurpixel.notify.sms.sinch.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Sms.Twilio/0.3.0": {
+      "sha512": "8Ny7QPDsVeFs6eIODBbY24TLaypZ1XB0r507pcV8fzrbk3/mWjizfDXBRDhOepDtSTsJ+3DZsaW/0+vpzHvCzQ==",
+      "type": "package",
+      "path": "recurpixel.notify.sms.twilio/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Sms.Twilio.dll",
+        "lib/net8.0/RecurPixel.Notify.Sms.Twilio.dll",
+        "logo.png",
+        "recurpixel.notify.sms.twilio.0.3.0.nupkg.sha512",
+        "recurpixel.notify.sms.twilio.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Sms.Vonage/0.3.0": {
+      "sha512": "I+U7tIn/9JmpUpt+oqhYgC0cGMiECZF4daNCIb/VxndDyh2u1e0/UhZakr/sDuHkLWr3W0gL1RaG1I6dqlzOBA==",
+      "type": "package",
+      "path": "recurpixel.notify.sms.vonage/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Sms.Vonage.dll",
+        "lib/net8.0/RecurPixel.Notify.Sms.Vonage.dll",
+        "logo.png",
+        "recurpixel.notify.sms.vonage.0.3.0.nupkg.sha512",
+        "recurpixel.notify.sms.vonage.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Teams/0.3.0": {
+      "sha512": "yS/QaHouvW7O6uh2MFCSAvRem0YR4ZBk6N29Qv4muPhZgaxS7uUVEP5lmlhjAoDr5J7TJ2EbIf4uDH6PQrgejg==",
+      "type": "package",
+      "path": "recurpixel.notify.teams/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Teams.dll",
+        "lib/net8.0/RecurPixel.Notify.Teams.dll",
+        "logo.png",
+        "recurpixel.notify.teams.0.3.0.nupkg.sha512",
+        "recurpixel.notify.teams.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Telegram/0.3.0": {
+      "sha512": "11AaN2iN3wplLGwSA+bYihYP4T3AFVv915eXLWEY5HKeLs5VXWnBQ0QKicnfe4COlNmbLSA3Z367oG0xHz5mxw==",
+      "type": "package",
+      "path": "recurpixel.notify.telegram/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Telegram.dll",
+        "lib/net8.0/RecurPixel.Notify.Telegram.dll",
+        "logo.png",
+        "recurpixel.notify.telegram.0.3.0.nupkg.sha512",
+        "recurpixel.notify.telegram.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.Viber/0.3.0": {
+      "sha512": "/Ca6RsYpF/17HTILyDXswzOWeOb6msJFALsHGondo2T/pVYkZOYPr/rH6vlEZgDNuBhv3nKwTtCxaGd+Lat1Ow==",
+      "type": "package",
+      "path": "recurpixel.notify.viber/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.Viber.dll",
+        "lib/net8.0/RecurPixel.Notify.Viber.dll",
+        "logo.png",
+        "recurpixel.notify.viber.0.3.0.nupkg.sha512",
+        "recurpixel.notify.viber.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.WhatsApp.MetaCloud/0.3.0": {
+      "sha512": "C0Fb/TMtwJolY4fATYvRJmkRRng+wWTBxLUN0EG+MK0NJOiVOA6DLQvbhGRfChrU37LG9TD2seRRe5PIKY1naw==",
+      "type": "package",
+      "path": "recurpixel.notify.whatsapp.metacloud/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.WhatsApp.MetaCloud.dll",
+        "lib/net8.0/RecurPixel.Notify.WhatsApp.MetaCloud.dll",
+        "logo.png",
+        "recurpixel.notify.whatsapp.metacloud.0.3.0.nupkg.sha512",
+        "recurpixel.notify.whatsapp.metacloud.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.WhatsApp.Msg91/0.3.0": {
+      "sha512": "Gbf92iWOd3w7hNbnYzzBl/wmU5K4IKsDSMutW9lYZ3joXlFbhxBXgwlztqgmmovRmwW/pkw+WzLrMpPFHKaICw==",
+      "type": "package",
+      "path": "recurpixel.notify.whatsapp.msg91/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.WhatsApp.Msg91.dll",
+        "lib/net8.0/RecurPixel.Notify.WhatsApp.Msg91.dll",
+        "logo.png",
+        "recurpixel.notify.whatsapp.msg91.0.3.0.nupkg.sha512",
+        "recurpixel.notify.whatsapp.msg91.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.WhatsApp.Twilio/0.3.0": {
+      "sha512": "L57GeGc0s2JEv1jx3k5yAu9oS3SImONinbcd1wCkih9oOmcP1muoNVlDnxp7hkd7ZSiASpjT+wkSeRVe81ZSTQ==",
+      "type": "package",
+      "path": "recurpixel.notify.whatsapp.twilio/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.WhatsApp.Twilio.dll",
+        "lib/net8.0/RecurPixel.Notify.WhatsApp.Twilio.dll",
+        "logo.png",
+        "recurpixel.notify.whatsapp.twilio.0.3.0.nupkg.sha512",
+        "recurpixel.notify.whatsapp.twilio.nuspec"
+      ]
+    },
+    "RecurPixel.Notify.WhatsApp.Vonage/0.3.0": {
+      "sha512": "339cpSQeTNIVuWvN9cprr24GceIvkqacJDTm42kQczD0oy5n8QZG3mDGVNR3zewSy4vmnyA+ItY+WGmWAPhSiQ==",
+      "type": "package",
+      "path": "recurpixel.notify.whatsapp.vonage/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RecurPixel.Notify.WhatsApp.Vonage.dll",
+        "lib/net8.0/RecurPixel.Notify.WhatsApp.Vonage.dll",
+        "logo.png",
+        "recurpixel.notify.whatsapp.vonage.0.3.0.nupkg.sha512",
+        "recurpixel.notify.whatsapp.vonage.nuspec"
+      ]
+    },
+    "SendGrid/9.29.3": {
+      "sha512": "nb/zHePecN9U4/Bmct+O+lpgK994JklbCCNMIgGPOone/DngjQoMCHeTvkl+m0Nglvm0dqMEshmvB4fO8eF3dA==",
+      "type": "package",
+      "path": "sendgrid/9.29.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/SendGrid.dll",
+        "lib/net40/SendGrid.pdb",
+        "lib/net40/SendGrid.xml",
+        "lib/net452/SendGrid.dll",
+        "lib/net452/SendGrid.pdb",
+        "lib/net452/SendGrid.xml",
+        "lib/netstandard1.3/SendGrid.dll",
+        "lib/netstandard1.3/SendGrid.pdb",
+        "lib/netstandard1.3/SendGrid.xml",
+        "lib/netstandard2.0/SendGrid.dll",
+        "lib/netstandard2.0/SendGrid.pdb",
+        "lib/netstandard2.0/SendGrid.xml",
+        "sendgrid.9.29.3.nupkg.sha512",
+        "sendgrid.nuspec"
+      ]
+    },
+    "starkbank-ecdsa/1.3.3": {
+      "sha512": "OblOaKb1enXn+dSp7tsx9yjwV+/BEKM9jFhshIkZTwCk7LuTFTp+wSon6rFzuPiIiTGtvVWQNUw2slHjGktJog==",
+      "type": "package",
+      "path": "starkbank-ecdsa/1.3.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/StarkbankEcdsa.dll",
+        "lib/net452/StarkbankEcdsa.dll",
+        "lib/netstandard1.3/StarkbankEcdsa.dll",
+        "lib/netstandard2.0/StarkbankEcdsa.dll",
+        "lib/netstandard2.1/StarkbankEcdsa.dll",
+        "starkbank-ecdsa.1.3.3.nupkg.sha512",
+        "starkbank-ecdsa.nuspec"
+      ]
+    },
+    "System.ClientModel/1.7.0": {
+      "sha512": "NKKA3/O6B7PxmtIzOifExHdfoWthy3AD4EZ1JfzcZU8yGZTbYrK1qvXsHUL/1yQKKqWSKgIR1Ih/yf2gOaHc4w==",
+      "type": "package",
+      "path": "system.clientmodel/1.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "CHANGELOG.md",
+        "DotNetPackageIcon.png",
+        "README.md",
+        "analyzers/dotnet/cs/System.ClientModel.SourceGeneration.dll",
+        "lib/net8.0/System.ClientModel.dll",
+        "lib/net8.0/System.ClientModel.xml",
+        "lib/net9.0/System.ClientModel.dll",
+        "lib/net9.0/System.ClientModel.xml",
+        "lib/netstandard2.0/System.ClientModel.dll",
+        "lib/netstandard2.0/System.ClientModel.xml",
+        "system.clientmodel.1.7.0.nupkg.sha512",
+        "system.clientmodel.nuspec"
+      ]
+    },
     "System.CodeDom/7.0.0": {
       "sha512": "GLltyqEsE5/3IE+zYRP5sNa1l44qKl9v+bfdMcwg+M9qnQf47wK3H0SUR/T+3N4JEQXF3vV4CSuuo0rsg+nq2A==",
       "type": "package",
@@ -2824,6 +4547,56 @@
         "system.management.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "System.Memory.Data/8.0.1": {
+      "sha512": "BVYuec3jV23EMRDeR7Dr1/qhx7369dZzJ9IWy2xylvb4YfXsrUxspWc4UWYid/tj4zZK58uGZqn2WQiaDMhmAg==",
+      "type": "package",
+      "path": "system.memory.data/8.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Memory.Data.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Memory.Data.targets",
+        "lib/net462/System.Memory.Data.dll",
+        "lib/net462/System.Memory.Data.xml",
+        "lib/net6.0/System.Memory.Data.dll",
+        "lib/net6.0/System.Memory.Data.xml",
+        "lib/net7.0/System.Memory.Data.dll",
+        "lib/net7.0/System.Memory.Data.xml",
+        "lib/net8.0/System.Memory.Data.dll",
+        "lib/net8.0/System.Memory.Data.xml",
+        "lib/netstandard2.0/System.Memory.Data.dll",
+        "lib/netstandard2.0/System.Memory.Data.xml",
+        "system.memory.data.8.0.1.nupkg.sha512",
+        "system.memory.data.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "Twilio/7.14.9": {
+      "sha512": "dYFgEoNofKasj2cpYddZT7yVkBexkQz4eTlQ4c72BO2H1H8UbTGGl9Aa7NIFBUuTcdNWOYwIZlHjmitlRng28g==",
+      "type": "package",
+      "path": "twilio/7.14.9",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net35/Twilio.dll",
+        "lib/net35/Twilio.xml",
+        "lib/net462/Twilio.dll",
+        "lib/net462/Twilio.xml",
+        "lib/net6.0/Twilio.dll",
+        "lib/net6.0/Twilio.xml",
+        "lib/netstandard2.1/Twilio.dll",
+        "lib/netstandard2.1/Twilio.xml",
+        "twilio.7.14.9.nupkg.sha512",
+        "twilio.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -2836,7 +4609,9 @@
       "Microsoft.EntityFrameworkCore.Design >= 10.0.8",
       "Microsoft.EntityFrameworkCore.Tools >= 10.0.8",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 10.0.1",
+      "RecurPixel.Notify.Sdk >= 0.3.0",
       "System.IdentityModel.Tokens.Jwt >= 8.18.0",
+      "Twilio >= 7.14.9",
       "iTextSharp >= 5.5.13.5"
     ]
   },
@@ -2919,9 +4694,17 @@
             "target": "Package",
             "version": "[10.0.1, )"
           },
+          "RecurPixel.Notify.Sdk": {
+            "target": "Package",
+            "version": "[0.3.0, )"
+          },
           "System.IdentityModel.Tokens.Jwt": {
             "target": "Package",
             "version": "[8.18.0, )"
+          },
+          "Twilio": {
+            "target": "Package",
+            "version": "[7.14.9, )"
           },
           "iTextSharp": {
             "target": "Package",

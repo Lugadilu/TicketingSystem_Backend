@@ -34,8 +34,30 @@ builder.Services.AddScoped<IAdminService, AdminService>();
 
 builder.Services.AddScoped<IPdfService, PdfService>();
 
+builder.Services.AddScoped<IPhoneNumberService, PhoneNumberService>();
+
+// Configure Fornax SMS options and service
+builder.Services.Configure<FornaxSmsOptions>(
+    builder.Configuration.GetSection("Fornax"));
+
+builder.Services.AddHttpClient<IFornaxSmsService, FornaxSmsService>((serviceProvider, client) =>
+{
+    var options = serviceProvider
+        .GetRequiredService<Microsoft.Extensions.Options.IOptions<FornaxSmsOptions>>()
+        .Value;
+
+    client.BaseAddress = new Uri(options.BaseUrl);
+});
+
+builder.Services.AddScoped<ITicketSmsTemplateService, TicketSmsTemplateService>();
+builder.Services.AddScoped<ITicketSmsNotificationService, TicketSmsNotificationService>();
+
+builder.Services.AddSingleton<ITicketSmsQueue, TicketSmsQueue>();
+builder.Services.AddHostedService<TicketSmsBackgroundWorker>();
+
 builder.Services.Configure<GoogleAuthSettings>(
     builder.Configuration.GetSection("GoogleAuth"));
+
 
 
 // ============ JWT CONFIGURATION ============
@@ -73,6 +95,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
 
 //app.UseHttpsRedirection();
 

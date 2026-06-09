@@ -179,7 +179,7 @@ public class TicketsController : ControllerBase
         }
         catch (InvalidOperationException ex)
         {
-            // ✅ NEW: Return 403 Forbidden for permission denied
+            //  NEW: Return 403 Forbidden for permission denied
             if (ex.Message.Contains("permission"))
                 return StatusCode(403, new ApiResponseDto<TicketResponseDto>
                 {

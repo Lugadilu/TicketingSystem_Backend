@@ -53,12 +53,16 @@ public class TicketService : ITicketService
     private readonly AppDbContext _context;
     private readonly IEmailService _emailService;
     private readonly IPdfService _pdfService;
+    //private readonly ITicketSmsNotificationService _ticketSmsNotificationService;
+    private readonly ITicketSmsQueue _ticketSmsQueue;
 
-    public TicketService(AppDbContext context, IEmailService emailService, IPdfService pdfService)
+    public TicketService(AppDbContext context, IEmailService emailService, IPdfService pdfService, ITicketSmsQueue ticketSmsQueue)
     {
         _context = context;
         _emailService = emailService;
         _pdfService = pdfService;
+        // _ticketSmsNotificationService = ticketSmsNotificationService;
+        _ticketSmsQueue = ticketSmsQueue;
     }
 
     public async Task<CreateTicketResponseDto> CreateTicketAsync(CreateTicketDto dto, Guid createdByUserId)
@@ -118,6 +122,21 @@ public class TicketService : ITicketService
             Console.WriteLine($"Failed to send ticket creation email: {ex.Message}");
         }
 
+        
+        //  SEND SMS NOTIFICATION - TICKET CREATION
+        {
+                _ticketSmsQueue.Enqueue(
+                new TicketSmsNotification(
+                    ticket.Id,
+                    ticket.TicketNumber,
+                    ticket.Title,
+                    user.FirstName,
+                    user.PhoneNumber,
+                    null,
+                    TicketStatus.Open,
+                    $"ticket:{ticket.Id}:created"));
+        }
+        
         return new CreateTicketResponseDto
         {
             Id = ticket.Id,
@@ -583,69 +602,6 @@ public class TicketService : ITicketService
 
 
 
-    // public async Task<TicketResponseDto> AssignTicketAsync(Guid ticketId, AssignTicketDto dto, Guid assignedByUserId)
-    // {
-    //     var ticket = await _context.Tickets
-    //         .Include(t => t.CreatedByUser)
-    //         .Include(t => t.AssignedToUser)
-    //         .Include(t => t.AssignedByUser)
-    //         .Include(t => t.ClosedByUser)
-    //         .FirstOrDefaultAsync(t => t.Id == ticketId);
-
-    //     if (ticket == null)
-    //         throw new InvalidOperationException("Ticket not found");
-
-    //     var technician = await _context.Users.FirstOrDefaultAsync(u => u.Id == dto.AssignedToUserId);
-    //     if (technician == null)
-    //         throw new InvalidOperationException("Technician not found");
-
-    //     var oldAssignedTo = ticket.AssignedToUser != null ? $"{ticket.AssignedToUser.FirstName} {ticket.AssignedToUser.LastName}" : "Unassigned";
-    //     var newAssignedTo = $"{technician.FirstName} {technician.LastName}";
-
-    //     ticket.AssignedToUserId = dto.AssignedToUserId;
-    //     ticket.AssignedByUserId = assignedByUserId;
-    //     ticket.UpdatedAt = DateTime.UtcNow;
-
-    //     _context.Tickets.Update(ticket);
-    //     await _context.SaveChangesAsync();
-
-    //     await LogActivityAsync(ticketId, assignedByUserId, "Ticket Assigned", oldAssignedTo, newAssignedTo);
-
-    //     //  SEND EMAIL NOTIFICATION - TICKET ASSIGNMENT
-    //     try
-    //     {
-    //         var emailSubject = $"Ticket Assigned to You: {ticket.TicketNumber}";
-    //         var emailBody = $@"
-    //         Dear {technician.FirstName},
-
-    //         A ticket has been assigned to you.
-
-    //         Ticket Details:
-    //         - Ticket Number: {ticket.TicketNumber}
-    //         - Title: {ticket.Title}
-    //         - Description: {ticket.Description}
-    //         - Category: {ticket.Category}
-    //         - Priority: {(Priority)ticket.Priority}
-    //         - Status: {ticket.Status}
-    //         - Created By: {ticket.CreatedByUser.FirstName} {ticket.CreatedByUser.LastName}
-    //         - Assigned Date: {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}
-
-    //         Please review and take action on this ticket.
-
-    //         Best regards,
-    //         Ticketing System
-    //         ";
-    //         await _emailService.SendEmailAsync(technician.Email, emailSubject, emailBody);
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.WriteLine($"Failed to send ticket assignment email: {ex.Message}");
-    //     }
-
-    //     return MapToTicketResponseDto(ticket);
-    // }
-
-
         public async Task<TicketResponseDto> ChangeStatusAsync(Guid ticketId, ChangeTicketStatusDto dto, Guid changedByUserId, UserRole changedByUserRole)
         {
             var ticket = await _context.Tickets
@@ -709,120 +665,32 @@ public class TicketService : ITicketService
                     throw new UnauthorizedAccessException("You do not have permission to change ticket status");
             }
 
-            var oldStatus = ticket.Status.ToString();
+            var oldStatus = ticket.Status;
             ticket.Status = dto.Status;
             ticket.UpdatedAt = DateTime.UtcNow;
 
             _context.Tickets.Update(ticket);
             await _context.SaveChangesAsync();
 
-            await LogActivityAsync(ticketId, changedByUserId, "Status Changed", oldStatus, dto.Status.ToString());
+            await LogActivityAsync(ticketId, changedByUserId, "Status Changed", oldStatus.ToString(), dto.Status.ToString());
+            
+            if (oldStatus != dto.Status)
+            {
+                _ticketSmsQueue.Enqueue(
+                new TicketSmsNotification(
+                    ticket.Id,
+                    ticket.TicketNumber,
+                    ticket.Title,
+                    ticket.CreatedByUser.FirstName,
+                    ticket.CreatedByUser.PhoneNumber,
+                    oldStatus,
+                    dto.Status,
+                    $"ticket:{ticket.Id}:status:{oldStatus}-to-{dto.Status}"));
+            }
 
             return MapToTicketResponseDto(ticket);
         }
 
-//     public async Task<TicketResponseDto> ChangeStatusAsync(Guid ticketId, ChangeTicketStatusDto dto)
-//     {
-//         var ticket = await _context.Tickets
-//             .Include(t => t.CreatedByUser)
-//             .Include(t => t.AssignedToUser)
-//             .Include(t => t.AssignedByUser)
-//             .Include(t => t.ClosedByUser)
-//             .FirstOrDefaultAsync(t => t.Id == ticketId);
-
-//         if (ticket == null)
-//             throw new InvalidOperationException("Ticket not found");
-
-//         var oldStatus = ticket.Status.ToString();
-//         ticket.Status = dto.Status;
-//         ticket.UpdatedAt = DateTime.UtcNow;
-
-//         _context.Tickets.Update(ticket);
-//         await _context.SaveChangesAsync();
-
-//         // IMPORTANT: Pass null for changedByUserId (no specific user for system action)
-//         await LogActivityAsync(ticketId, null, "Status Changed", oldStatus, dto.Status.ToString());
-
-//         // ✅ SEND EMAIL NOTIFICATION - STATUS CHANGE
-//         try
-//         {
-//             var emailSubject = $"Ticket Status Updated: {ticket.TicketNumber}";
-//             var emailBody = $@"
-// Dear {ticket.CreatedByUser.FirstName},
-
-// Your ticket status has been updated.
-
-// Ticket Details:
-// - Ticket Number: {ticket.TicketNumber}
-// - Title: {ticket.Title}
-// - Previous Status: {oldStatus}
-// - New Status: {dto.Status}
-// - Updated Date: {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}
-
-// Thank you for your patience.
-
-// Best regards,
-// Ticketing System
-// ";
-//             await _emailService.SendEmailAsync(ticket.CreatedByUser.Email, emailSubject, emailBody);
-//         }
-//         catch (Exception ex)
-//         {
-//             Console.WriteLine($"Failed to send ticket status change email: {ex.Message}");
-//         }
-
-//         return MapToTicketResponseDto(ticket);
-//     }
-
-//     public async Task<bool> CloseTicketAsync(Guid ticketId, Guid closedByUserId)
-//     {
-//         var ticket = await _context.Tickets
-//             .Include(t => t.CreatedByUser)
-//             .FirstOrDefaultAsync(t => t.Id == ticketId);
-
-//         if (ticket == null)
-//             throw new InvalidOperationException("Ticket not found");
-
-//         var oldStatus = ticket.Status.ToString();
-//         ticket.Status = TicketStatus.Closed;
-//         ticket.ClosedByUserId = closedByUserId;
-//         ticket.ClosedAt = DateTime.UtcNow;
-//         ticket.UpdatedAt = DateTime.UtcNow;
-
-//         _context.Tickets.Update(ticket);
-//         await _context.SaveChangesAsync();
-
-//         await LogActivityAsync(ticketId, closedByUserId, "Ticket Closed", oldStatus, "Closed");
-
-//         // ✅ SEND EMAIL NOTIFICATION - TICKET CLOSED
-//         try
-//         {
-//             var emailSubject = $"Ticket Closed: {ticket.TicketNumber}";
-//             var emailBody = $@"
-// Dear {ticket.CreatedByUser.FirstName},
-
-// Your ticket has been closed.
-
-// Ticket Details:
-// - Ticket Number: {ticket.TicketNumber}
-// - Title: {ticket.Title}
-// - Status: Closed
-// - Closed Date: {ticket.ClosedAt:yyyy-MM-dd HH:mm:ss}
-
-// If you need further assistance, feel free to create a new ticket.
-
-// Best regards,
-// Ticketing System
-// ";
-//             await _emailService.SendEmailAsync(ticket.CreatedByUser.Email, emailSubject, emailBody);
-//         }
-//         catch (Exception ex)
-//         {
-//             Console.WriteLine($"Failed to send ticket closed email: {ex.Message}");
-//         }
-
-//         return true;
-//     }
 
 
         public async Task<bool> CloseTicketAsync(Guid ticketId, Guid closedByUserId, UserRole closedByUserRole)
@@ -852,7 +720,7 @@ public class TicketService : ITicketService
             if (ticket.Status != TicketStatus.Resolved)
                 throw new InvalidOperationException("Only resolved tickets can be closed");
 
-            var oldStatus = ticket.Status.ToString();
+            var oldStatus = ticket.Status;
 
             ticket.Status = TicketStatus.Closed;
             ticket.ClosedByUserId = closedByUserId;
@@ -862,7 +730,18 @@ public class TicketService : ITicketService
             _context.Tickets.Update(ticket);
             await _context.SaveChangesAsync();
 
-            await LogActivityAsync(ticketId, closedByUserId, "Ticket Closed", oldStatus, "Closed");
+            await LogActivityAsync(ticketId, closedByUserId, "Ticket Closed", oldStatus.ToString(), TicketStatus.Closed.ToString());
+
+            _ticketSmsQueue.Enqueue(
+            new TicketSmsNotification(
+                ticket.Id,
+                ticket.TicketNumber,
+                ticket.Title,
+                ticket.CreatedByUser.FirstName,
+                ticket.CreatedByUser.PhoneNumber,
+                oldStatus,
+                TicketStatus.Closed,
+                $"ticket:{ticket.Id}:status:{oldStatus}-to-{TicketStatus.Closed}"));
 
             return true;
         }

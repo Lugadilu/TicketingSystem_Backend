@@ -15,11 +15,78 @@
           "Microsoft.EntityFrameworkCore": "10.0.8",
           "Microsoft.EntityFrameworkCore.Design": "10.0.8",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.1",
+          "RecurPixel.Notify.Sdk": "0.3.0",
           "System.IdentityModel.Tokens.Jwt": "8.18.0",
+          "Twilio": "7.14.9",
           "iTextSharp": "5.5.13.5"
         },
         "runtime": {
           "TicketingSystem.Api.dll": {}
+        }
+      },
+      "AWSSDK.Core/4.0.3.12": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.3.12"
+          }
+        }
+      },
+      "AWSSDK.SimpleEmailV2/4.0.11.5": {
+        "dependencies": {
+          "AWSSDK.Core": "4.0.3.12"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.SimpleEmailV2.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.11.5"
+          }
+        }
+      },
+      "AWSSDK.SimpleNotificationService/4.0.2.16": {
+        "dependencies": {
+          "AWSSDK.Core": "4.0.3.12"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.SimpleNotificationService.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.2.16"
+          }
+        }
+      },
+      "Azure.Communication.Email/1.1.0": {
+        "dependencies": {
+          "Azure.Core": "1.49.0"
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Communication.Email.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.100.25.50705"
+          }
+        }
+      },
+      "Azure.Communication.Sms/1.0.2": {
+        "dependencies": {
+          "Azure.Core": "1.49.0"
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Communication.Sms.dll": {
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.225.46801"
+          }
+        }
+      },
+      "Azure.Core/1.49.0": {
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "8.0.0",
+          "System.ClientModel": "1.7.0",
+          "System.Memory.Data": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Core.dll": {
+            "assemblyVersion": "1.49.0.0",
+            "fileVersion": "1.4900.25.47211"
+          }
         }
       },
       "BCrypt.Net-Next/4.2.0": {
@@ -35,6 +102,55 @@
           "lib/net6.0/BouncyCastle.Cryptography.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.6.2.46322"
+          }
+        }
+      },
+      "dotAPNS/4.6.0": {
+        "dependencies": {
+          "JetBrains.Annotations": "2022.1.0",
+          "Newtonsoft.Json": "13.0.4",
+          "Portable.BouncyCastle": "1.9.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/dotAPNS.dll": {
+            "assemblyVersion": "4.6.0.0",
+            "fileVersion": "4.6.0.0"
+          }
+        }
+      },
+      "FirebaseAdmin/3.4.0": {
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.74.0"
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "assemblyVersion": "3.4.0.0",
+            "fileVersion": "3.4.0.0"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "8.0.0",
+          "Newtonsoft.Json": "13.0.4"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "assemblyVersion": "4.8.0.0",
+            "fileVersion": "4.8.0.0"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "1.74.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "assemblyVersion": "4.8.0.0",
+            "fileVersion": "4.8.0.0"
           }
         }
       },
@@ -92,6 +208,14 @@
           }
         }
       },
+      "JetBrains.Annotations/2022.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/JetBrains.Annotations.dll": {
+            "assemblyVersion": "4242.42.42.42",
+            "fileVersion": "2022.1.0.0"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authentication.JwtBearer/10.0.8": {
         "dependencies": {
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "8.0.1"
@@ -111,6 +235,22 @@
           "lib/net10.0/Microsoft.AspNetCore.OpenApi.dll": {
             "assemblyVersion": "10.0.1.0",
             "fileVersion": "10.0.125.57005"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/8.0.0": {
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
+      "Microsoft.Bcl.Memory/10.0.7": {
+        "runtime": {
+          "lib/net10.0/Microsoft.Bcl.Memory.dll": {
+            "assemblyVersion": "10.0.0.7",
+            "fileVersion": "10.0.726.21808"
           }
         }
       },
@@ -571,6 +711,503 @@
           }
         }
       },
+      "Portable.BouncyCastle/1.9.0": {
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
+            "assemblyVersion": "1.9.0.0",
+            "fileVersion": "1.9.0.1"
+          }
+        }
+      },
+      "RecurPixel.Notify.Core/0.3.0": {
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Core.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Dashboard/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Dashboard.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Dashboard.EfCore/0.3.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "10.0.8",
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.8",
+          "RecurPixel.Notify.Dashboard": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Dashboard.EfCore.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Discord/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Discord.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Email.AwsSes/0.3.0": {
+        "dependencies": {
+          "AWSSDK.SimpleEmailV2": "4.0.11.5",
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.AwsSes.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Email.AzureCommEmail/0.3.0": {
+        "dependencies": {
+          "Azure.Communication.Email": "1.1.0",
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.AzureCommEmail.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Email.Mailgun/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.Mailgun.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Email.Postmark/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.Postmark.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Email.Resend/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.Resend.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Email.SendGrid/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0",
+          "SendGrid": "9.29.3"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.SendGrid.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Email.Smtp/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Email.Smtp.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Facebook/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Facebook.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.InApp/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.InApp.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Line/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Line.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Mattermost/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Mattermost.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Orchestrator/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Orchestrator.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Push.Apns/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0",
+          "dotAPNS": "4.6.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Push.Apns.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Push.Expo/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Push.Expo.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Push.Fcm/0.3.0": {
+        "dependencies": {
+          "FirebaseAdmin": "3.4.0",
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Push.Fcm.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Push.OneSignal/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Push.OneSignal.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.RocketChat/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.RocketChat.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Sdk/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0",
+          "RecurPixel.Notify.Dashboard": "0.3.0",
+          "RecurPixel.Notify.Dashboard.EfCore": "0.3.0",
+          "RecurPixel.Notify.Discord": "0.3.0",
+          "RecurPixel.Notify.Email.AwsSes": "0.3.0",
+          "RecurPixel.Notify.Email.AzureCommEmail": "0.3.0",
+          "RecurPixel.Notify.Email.Mailgun": "0.3.0",
+          "RecurPixel.Notify.Email.Postmark": "0.3.0",
+          "RecurPixel.Notify.Email.Resend": "0.3.0",
+          "RecurPixel.Notify.Email.SendGrid": "0.3.0",
+          "RecurPixel.Notify.Email.Smtp": "0.3.0",
+          "RecurPixel.Notify.Facebook": "0.3.0",
+          "RecurPixel.Notify.InApp": "0.3.0",
+          "RecurPixel.Notify.Line": "0.3.0",
+          "RecurPixel.Notify.Mattermost": "0.3.0",
+          "RecurPixel.Notify.Orchestrator": "0.3.0",
+          "RecurPixel.Notify.Push.Apns": "0.3.0",
+          "RecurPixel.Notify.Push.Expo": "0.3.0",
+          "RecurPixel.Notify.Push.Fcm": "0.3.0",
+          "RecurPixel.Notify.Push.OneSignal": "0.3.0",
+          "RecurPixel.Notify.RocketChat": "0.3.0",
+          "RecurPixel.Notify.Slack": "0.3.0",
+          "RecurPixel.Notify.Sms.AwsSns": "0.3.0",
+          "RecurPixel.Notify.Sms.AzureCommSms": "0.3.0",
+          "RecurPixel.Notify.Sms.MessageBird": "0.3.0",
+          "RecurPixel.Notify.Sms.Msg91": "0.3.0",
+          "RecurPixel.Notify.Sms.Plivo": "0.3.0",
+          "RecurPixel.Notify.Sms.Sinch": "0.3.0",
+          "RecurPixel.Notify.Sms.Twilio": "0.3.0",
+          "RecurPixel.Notify.Sms.Vonage": "0.3.0",
+          "RecurPixel.Notify.Teams": "0.3.0",
+          "RecurPixel.Notify.Telegram": "0.3.0",
+          "RecurPixel.Notify.Viber": "0.3.0",
+          "RecurPixel.Notify.WhatsApp.MetaCloud": "0.3.0",
+          "RecurPixel.Notify.WhatsApp.Msg91": "0.3.0",
+          "RecurPixel.Notify.WhatsApp.Twilio": "0.3.0",
+          "RecurPixel.Notify.WhatsApp.Vonage": "0.3.0"
+        }
+      },
+      "RecurPixel.Notify.Slack/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Slack.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Sms.AwsSns/0.3.0": {
+        "dependencies": {
+          "AWSSDK.SimpleNotificationService": "4.0.2.16",
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.AwsSns.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Sms.AzureCommSms/0.3.0": {
+        "dependencies": {
+          "Azure.Communication.Sms": "1.0.2",
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.AzureCommSms.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Sms.MessageBird/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.MessageBird.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Sms.Msg91/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Msg91.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Sms.Plivo/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Plivo.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Sms.Sinch/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Sinch.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Sms.Twilio/0.3.0": {
+        "dependencies": {
+          "Microsoft.Bcl.Memory": "10.0.7",
+          "RecurPixel.Notify.Core": "0.3.0",
+          "Twilio": "7.14.9"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Twilio.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Sms.Vonage/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Sms.Vonage.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Teams/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Teams.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Telegram/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Telegram.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.Viber/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.Viber.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.WhatsApp.MetaCloud/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.MetaCloud.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.WhatsApp.Msg91/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.Msg91.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.WhatsApp.Twilio/0.3.0": {
+        "dependencies": {
+          "Microsoft.Bcl.Memory": "10.0.7",
+          "RecurPixel.Notify.Core": "0.3.0",
+          "Twilio": "7.14.9"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.Twilio.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "RecurPixel.Notify.WhatsApp.Vonage/0.3.0": {
+        "dependencies": {
+          "RecurPixel.Notify.Core": "0.3.0"
+        },
+        "runtime": {
+          "lib/net10.0/RecurPixel.Notify.WhatsApp.Vonage.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        }
+      },
+      "SendGrid/9.29.3": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.4",
+          "starkbank-ecdsa": "1.3.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/SendGrid.dll": {
+            "assemblyVersion": "9.29.3.0",
+            "fileVersion": "9.29.3.0"
+          }
+        }
+      },
+      "starkbank-ecdsa/1.3.3": {
+        "runtime": {
+          "lib/netstandard2.1/StarkbankEcdsa.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "System.ClientModel/1.7.0": {
+        "dependencies": {
+          "System.Memory.Data": "8.0.1"
+        },
+        "runtime": {
+          "lib/net9.0/System.ClientModel.dll": {
+            "assemblyVersion": "1.7.0.0",
+            "fileVersion": "1.700.25.47207"
+          }
+        }
+      },
       "System.CodeDom/7.0.0": {
         "runtime": {
           "lib/net7.0/System.CodeDom.dll": {
@@ -669,6 +1306,27 @@
             "fileVersion": "7.0.723.27404"
           }
         }
+      },
+      "System.Memory.Data/8.0.1": {
+        "runtime": {
+          "lib/net8.0/System.Memory.Data.dll": {
+            "assemblyVersion": "8.0.0.1",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "Twilio/7.14.9": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Tokens": "8.18.0",
+          "Newtonsoft.Json": "13.0.4",
+          "System.IdentityModel.Tokens.Jwt": "8.18.0"
+        },
+        "runtime": {
+          "lib/net6.0/Twilio.dll": {
+            "assemblyVersion": "7.14.9.0",
+            "fileVersion": "7.14.9.0"
+          }
+        }
       }
     }
   },
@@ -677,6 +1335,48 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AWSSDK.Core/4.0.3.12": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/FyE96xV2qJLgJN++ZW8M7udRf2NBLoku9AkEHLQqpH9uv0r0QQK2sw2pF3OvzKnuKsyp+Mx5wYwgFXPLnBb9g==",
+      "path": "awssdk.core/4.0.3.12",
+      "hashPath": "awssdk.core.4.0.3.12.nupkg.sha512"
+    },
+    "AWSSDK.SimpleEmailV2/4.0.11.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NCid0P/maAfc1lemnbC6siw0fBDq6n+ZMr+ST0fiPQdhhEnuUwECV5zDU8bVCy8s6BCT9erp/vMNU160SxhW4A==",
+      "path": "awssdk.simpleemailv2/4.0.11.5",
+      "hashPath": "awssdk.simpleemailv2.4.0.11.5.nupkg.sha512"
+    },
+    "AWSSDK.SimpleNotificationService/4.0.2.16": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3gdOmld1p6ZyXKCsbIrEyo2zbYEseC0PvwNimLxj9vA/o5YGj5yFy2Ys79r7/6980OnwCM0W8rPe0i5v64RrHg==",
+      "path": "awssdk.simplenotificationservice/4.0.2.16",
+      "hashPath": "awssdk.simplenotificationservice.4.0.2.16.nupkg.sha512"
+    },
+    "Azure.Communication.Email/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yR0QWbrvM/RvOxrkFWaPqzltAiF/MGoVhjm++UkEpXvN00Brc/LevJXeg2BUVbIucoxx+kKW7HTAzGKspFh8Vg==",
+      "path": "azure.communication.email/1.1.0",
+      "hashPath": "azure.communication.email.1.1.0.nupkg.sha512"
+    },
+    "Azure.Communication.Sms/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EOgM6NjodrOTB8ej7aLP8PmW5m1ZzAOXIv3gu+7QhYL5p/FvmsGHPozrMKVeZPsIEB50gZQg7gbDKvtpAOvDbg==",
+      "path": "azure.communication.sms/1.0.2",
+      "hashPath": "azure.communication.sms.1.0.2.nupkg.sha512"
+    },
+    "Azure.Core/1.49.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wmY5VEEVTBJN+8KVB6qSVZYDCMpHs1UXooOijx/NH7OsMtK92NlxhPBpPyh4cR+07R/zyDGvA5+Fss4TpwlO+g==",
+      "path": "azure.core/1.49.0",
+      "hashPath": "azure.core.1.49.0.nupkg.sha512"
     },
     "BCrypt.Net-Next/4.2.0": {
       "type": "package",
@@ -691,6 +1391,34 @@
       "sha512": "sha512-7oWOcvnntmMKNzDLsdxAYqApt+AjpRpP2CShjMfIa3umZ42UQMvH0tl1qAliYPNYO6vTdcGMqnRrCPmsfzTI1w==",
       "path": "bouncycastle.cryptography/2.6.2",
       "hashPath": "bouncycastle.cryptography.2.6.2.nupkg.sha512"
+    },
+    "dotAPNS/4.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-51fnJLyNfqv1E3CekBgejqxfC0xelgfoUXHFJMNNkfJN9xuZszfqrR3f8707BQBCspo8d95NZVs1TH9DJqVmRA==",
+      "path": "dotapns/4.6.0",
+      "hashPath": "dotapns.4.6.0.nupkg.sha512"
+    },
+    "FirebaseAdmin/3.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sQyVEOYRe4HSSmRCJQhKr33DxZk10lpDE2otdTgNkqPn4BRul2JG7TCQC7N7X0wO9ShnPLbVS4xuSUHlaPBbug==",
+      "path": "firebaseadmin/3.4.0",
+      "hashPath": "firebaseadmin.3.4.0.nupkg.sha512"
+    },
+    "Google.Api.Gax/4.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xlV8Jq/G5CQAA3PwYAuKGjfzGOP7AvjhREnE6vgZlzxREGYchHudZWa2PWSqFJL+MBtz9YgitLpRogANN3CVvg==",
+      "path": "google.api.gax/4.8.0",
+      "hashPath": "google.api.gax.4.8.0.nupkg.sha512"
+    },
+    "Google.Api.Gax.Rest/4.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zaA5LZ2VvGj/wwIzRB68swr7khi2kWNgqWvsB0fYtScIAl3kGkGtqiBcx63H1YLeKr5xau1866bFjTeReH6FSQ==",
+      "path": "google.api.gax.rest/4.8.0",
+      "hashPath": "google.api.gax.rest.4.8.0.nupkg.sha512"
     },
     "Google.Apis/1.74.0": {
       "type": "package",
@@ -727,6 +1455,13 @@
       "path": "itextsharp/5.5.13.5",
       "hashPath": "itextsharp.5.5.13.5.nupkg.sha512"
     },
+    "JetBrains.Annotations/2022.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ASfpoFJxiRsC9Xc4TWuPM41Zb/gl64xwfMOhnOZ3RnVWGYIZchjpWQV5zshJgoc/ZxVtgjaF7b577lURj7E6ig==",
+      "path": "jetbrains.annotations/2022.1.0",
+      "hashPath": "jetbrains.annotations.2022.1.0.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Authentication.JwtBearer/10.0.8": {
       "type": "package",
       "serviceable": true,
@@ -740,6 +1475,20 @@
       "sha512": "sha512-gMY53EggRIFawhue66GanHcm1Tcd0+QzzMwnMl60LrEoJhGgzA9qAbLx6t/ON3hX4flc2NcEbTK1Z5GCLYHcwA==",
       "path": "microsoft.aspnetcore.openapi/10.0.1",
       "hashPath": "microsoft.aspnetcore.openapi.10.0.1.nupkg.sha512"
+    },
+    "Microsoft.Bcl.AsyncInterfaces/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3WA9q9yVqJp222P3x1wYIGDAkpjAku0TMUaaQV22g6L67AI0LdOIrVS7Ht2vJfLHGSPVuqN94vIr15qn+HEkHw==",
+      "path": "microsoft.bcl.asyncinterfaces/8.0.0",
+      "hashPath": "microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.Bcl.Memory/10.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+0MJLOVIO64hZuP8vwdIBbF8QmOw8ZK/1PXq6h+981OrRaWo6e8PmUajbEO7fuKfmaDxasxj0sQPZJI3Dewpig==",
+      "path": "microsoft.bcl.memory/10.0.7",
+      "hashPath": "microsoft.bcl.memory.10.0.7.nupkg.sha512"
     },
     "Microsoft.Build.Framework/18.0.2": {
       "type": "package",
@@ -902,6 +1651,300 @@
       "path": "npgsql.entityframeworkcore.postgresql/10.0.1",
       "hashPath": "npgsql.entityframeworkcore.postgresql.10.0.1.nupkg.sha512"
     },
+    "Portable.BouncyCastle/1.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
+      "path": "portable.bouncycastle/1.9.0",
+      "hashPath": "portable.bouncycastle.1.9.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Core/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gmhiaUoXntXfU8MwqNchOTOjvjj6cIO43kmZjmRgx9OolhVXrVzif2VMstYCTGH0kcp7BODcjCowCWPqbdrTgA==",
+      "path": "recurpixel.notify.core/0.3.0",
+      "hashPath": "recurpixel.notify.core.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Dashboard/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4RzvNKY/fSEr38bp8q+3INN00xwdMiiQyGQu2OwtLGgTkT5H2izk+BUFth6zZVdvid8wttqZqEIicM1MkX5lMg==",
+      "path": "recurpixel.notify.dashboard/0.3.0",
+      "hashPath": "recurpixel.notify.dashboard.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Dashboard.EfCore/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dKCEu4/i0D7m+HSop2p+VYr5BPPnx6hJNm/teODXA/OKitdSPDqVpSJFnFzGnMLPsUZVgoRXKcLBZLkijfpBeg==",
+      "path": "recurpixel.notify.dashboard.efcore/0.3.0",
+      "hashPath": "recurpixel.notify.dashboard.efcore.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Discord/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eEDdGNYi4dOrdg35menq3bsoWNcf2ES8kmCh1hLdALu/TapPepkDmDtW2iN8CEnyscmGk/ArJyQQosm8eN20Gw==",
+      "path": "recurpixel.notify.discord/0.3.0",
+      "hashPath": "recurpixel.notify.discord.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Email.AwsSes/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xDdemc30tc1WLv3RPBz3wLxWJqSBmJCw/pAPJMsbFD7EblaCVD6vmBljjp3t8CASvnDSlKOE/Sy+o/nBZRmL5g==",
+      "path": "recurpixel.notify.email.awsses/0.3.0",
+      "hashPath": "recurpixel.notify.email.awsses.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Email.AzureCommEmail/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Xc7sNFlOJ9AyozWn+HmWSSOAGfxTxNpoqgzkydoa9fZfs5DgW08EmWjNRM192b0KD3bJvebeEM2S/rXdJkNEiA==",
+      "path": "recurpixel.notify.email.azurecommemail/0.3.0",
+      "hashPath": "recurpixel.notify.email.azurecommemail.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Email.Mailgun/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LSVD1gNFM11yV+ymuGocwFsncV/GqQ4mMqGqFefD3wOXITx+9ObhzvsMNI/0oaEH9CMjgqxAfRXt6dkVMDowWg==",
+      "path": "recurpixel.notify.email.mailgun/0.3.0",
+      "hashPath": "recurpixel.notify.email.mailgun.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Email.Postmark/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HMvAhr84zC9HPU2BT3fKOHGoe2Oyzg/K+P4SftoOFi183WJQjjhTrgzAcbDasgMswDnvqM2g5dAgphAZhjSNMw==",
+      "path": "recurpixel.notify.email.postmark/0.3.0",
+      "hashPath": "recurpixel.notify.email.postmark.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Email.Resend/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EU8OrLdNpBkMfWkogcMz0F7X0QN/dpSJmZ3jy45fyyxjowtZdzgr9ldI1RbYPSNHyZZwkJ8bdz0Y989nPdTmRQ==",
+      "path": "recurpixel.notify.email.resend/0.3.0",
+      "hashPath": "recurpixel.notify.email.resend.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Email.SendGrid/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IF2fZcJfhXG5gPc9DKiQkYceKvDmu1aQBsZPCq0ZsMlpBwrVjYPZnfJLswAAZkdQlDis+YO1ohzgu2/d6DMFow==",
+      "path": "recurpixel.notify.email.sendgrid/0.3.0",
+      "hashPath": "recurpixel.notify.email.sendgrid.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Email.Smtp/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/5rDqNzDab9zKOVb4xh93hSULxy03qL3d+3kqIVo63lq/2U3ORQPVH+VgcYQ8bR07+fK07yxydM5xGXNoRaNow==",
+      "path": "recurpixel.notify.email.smtp/0.3.0",
+      "hashPath": "recurpixel.notify.email.smtp.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Facebook/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Yr4MRsSwVDsr7U8HdN5rEjvDNc+rWbvv/ucw/z8YBCImeeANvkibTTfmr2h7hXFbNoFtiGhAV5cySPbFRbFbcA==",
+      "path": "recurpixel.notify.facebook/0.3.0",
+      "hashPath": "recurpixel.notify.facebook.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.InApp/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1c0OpWGcltr9DOplBHWDQPWz6HNjh8YD5Ds4dk6uiNjfqzjzEgVXOzN6BiZPjkro4FE7xHACd9q6thjqHWUaDQ==",
+      "path": "recurpixel.notify.inapp/0.3.0",
+      "hashPath": "recurpixel.notify.inapp.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Line/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/pSb8pnnIoh8GfapWLnRE/4WZVKTFeCHaTqfx9gN26E1cXn9BuzojCYevZ4JVDMw0MbqCmy+yC3yPnBwrPkEdg==",
+      "path": "recurpixel.notify.line/0.3.0",
+      "hashPath": "recurpixel.notify.line.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Mattermost/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gUaTV3vuSuFzJxKycNbzEMmdVCYn4JGNvIY+1euIdjrx7BQ28oW6zcPp09AZUKOJfhV0zQ2N7BPNfryWKu5bYw==",
+      "path": "recurpixel.notify.mattermost/0.3.0",
+      "hashPath": "recurpixel.notify.mattermost.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Orchestrator/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sMvxQPiD9igmpEk3VSkLx7pM3H4y3jmah1tdUYXYOZSSFuQoM8sQNsk4LdWREFs/x5pr8im9MCsMthx7Yi6NrQ==",
+      "path": "recurpixel.notify.orchestrator/0.3.0",
+      "hashPath": "recurpixel.notify.orchestrator.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Push.Apns/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-h4TH2U5URH6hCeW+rHHyx92SgA7nb1IM8DGhfF/AxZjMEH4LJGl221hRzok/8CSvyGt8sPzjdyqg66OsxJlPmg==",
+      "path": "recurpixel.notify.push.apns/0.3.0",
+      "hashPath": "recurpixel.notify.push.apns.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Push.Expo/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RZB7AwSIknQXGSvAkuF3WVkD/6WEqACaERaH2lOerTxoOyl1VQGUhEBwIjdwLEuOr7B9TbEsLCCfSWzLSpbXOw==",
+      "path": "recurpixel.notify.push.expo/0.3.0",
+      "hashPath": "recurpixel.notify.push.expo.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Push.Fcm/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Wi/eTNHnGVkcAZ57GLPsxpoBtxwRlG88Lu3fWOpd6H0f38MYd46dQD+3Gfdp795mOyvl2hdhjuQuhGIYgqKHng==",
+      "path": "recurpixel.notify.push.fcm/0.3.0",
+      "hashPath": "recurpixel.notify.push.fcm.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Push.OneSignal/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8hwI2sg+Drf+fxdJeYqFKyh/QJATZV5sNrqldjJ/+n0tdstMoPvvTWed8itZYumCO8ZSnrb4hu6NyQy7X8dZ+Q==",
+      "path": "recurpixel.notify.push.onesignal/0.3.0",
+      "hashPath": "recurpixel.notify.push.onesignal.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.RocketChat/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MI50GafM4fcikSVdZufawja//kLZsz7lQ7RBWlaUxFJu7ScFRMLgY4ML0UPVia004n3N4zSqNrL3pr4z4X0zog==",
+      "path": "recurpixel.notify.rocketchat/0.3.0",
+      "hashPath": "recurpixel.notify.rocketchat.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Sdk/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9624KkGDMc6cQFGNd0Se+fjT0igvKHDoSwzUiEgAsQ6K8gh/2sqHgQw6sDkclEag9u6VbDAR9hw9TYcQZuLiGA==",
+      "path": "recurpixel.notify.sdk/0.3.0",
+      "hashPath": "recurpixel.notify.sdk.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Slack/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LsGDkb21kcNpOtkP9a3md7qFsDr8p2TgIG2zVjhujGb+v1W2/mb++e8wrjrswlVIWQwNiIacPZL90GoKgki0Lg==",
+      "path": "recurpixel.notify.slack/0.3.0",
+      "hashPath": "recurpixel.notify.slack.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Sms.AwsSns/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5XVyGqzEmeOBAft+8D0QNGGxsNGTSH3WqqS+/B7WNRFTegJAPFNagE2xblZWb6+ifzNXK/Obd+EQ7/WMn2S46g==",
+      "path": "recurpixel.notify.sms.awssns/0.3.0",
+      "hashPath": "recurpixel.notify.sms.awssns.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Sms.AzureCommSms/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ajGKa9MaTI5+Q6U8gQ6UD8bMBRWDK434PDt1KXRohcm9S5Pc9u/ZpwGlNRNnP4/+i8Be+z6QBUx47qlyxWFi6g==",
+      "path": "recurpixel.notify.sms.azurecommsms/0.3.0",
+      "hashPath": "recurpixel.notify.sms.azurecommsms.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Sms.MessageBird/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qeRYXAb6BArAT4LRmCzVqXy7c3L3F8ZymNeSo7E+G5vURQ42rcaYAsDYImpwZrWWhbCUhKcppmHuf1z2Y6qOtQ==",
+      "path": "recurpixel.notify.sms.messagebird/0.3.0",
+      "hashPath": "recurpixel.notify.sms.messagebird.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Sms.Msg91/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uFUtL7MZ2x4pb+UB028fwhxyxqP8rAF03u0mFObli9WqvRI7TlnXSb50/YUxPSeu5ZQDLs9v7QNtdSmKg8xDQw==",
+      "path": "recurpixel.notify.sms.msg91/0.3.0",
+      "hashPath": "recurpixel.notify.sms.msg91.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Sms.Plivo/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KALapUL5eIO7vedMQgEZXsxAYBpmYcmxGHLqYGyuW5DOEW00HLoRE3rj43snH+qpmAIfD2t3LI0k+WBcQwITXA==",
+      "path": "recurpixel.notify.sms.plivo/0.3.0",
+      "hashPath": "recurpixel.notify.sms.plivo.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Sms.Sinch/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sVbHvFtCfxVzpjfqzwmrPnf1n0nmtqVwk0Rktke+8Wg1pI8ffigzG1N6YlQ4zHFAikQCnxxLLEPsoK3CFJU/Rg==",
+      "path": "recurpixel.notify.sms.sinch/0.3.0",
+      "hashPath": "recurpixel.notify.sms.sinch.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Sms.Twilio/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8Ny7QPDsVeFs6eIODBbY24TLaypZ1XB0r507pcV8fzrbk3/mWjizfDXBRDhOepDtSTsJ+3DZsaW/0+vpzHvCzQ==",
+      "path": "recurpixel.notify.sms.twilio/0.3.0",
+      "hashPath": "recurpixel.notify.sms.twilio.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Sms.Vonage/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-I+U7tIn/9JmpUpt+oqhYgC0cGMiECZF4daNCIb/VxndDyh2u1e0/UhZakr/sDuHkLWr3W0gL1RaG1I6dqlzOBA==",
+      "path": "recurpixel.notify.sms.vonage/0.3.0",
+      "hashPath": "recurpixel.notify.sms.vonage.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Teams/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yS/QaHouvW7O6uh2MFCSAvRem0YR4ZBk6N29Qv4muPhZgaxS7uUVEP5lmlhjAoDr5J7TJ2EbIf4uDH6PQrgejg==",
+      "path": "recurpixel.notify.teams/0.3.0",
+      "hashPath": "recurpixel.notify.teams.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Telegram/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-11AaN2iN3wplLGwSA+bYihYP4T3AFVv915eXLWEY5HKeLs5VXWnBQ0QKicnfe4COlNmbLSA3Z367oG0xHz5mxw==",
+      "path": "recurpixel.notify.telegram/0.3.0",
+      "hashPath": "recurpixel.notify.telegram.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.Viber/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/Ca6RsYpF/17HTILyDXswzOWeOb6msJFALsHGondo2T/pVYkZOYPr/rH6vlEZgDNuBhv3nKwTtCxaGd+Lat1Ow==",
+      "path": "recurpixel.notify.viber/0.3.0",
+      "hashPath": "recurpixel.notify.viber.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.WhatsApp.MetaCloud/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-C0Fb/TMtwJolY4fATYvRJmkRRng+wWTBxLUN0EG+MK0NJOiVOA6DLQvbhGRfChrU37LG9TD2seRRe5PIKY1naw==",
+      "path": "recurpixel.notify.whatsapp.metacloud/0.3.0",
+      "hashPath": "recurpixel.notify.whatsapp.metacloud.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.WhatsApp.Msg91/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Gbf92iWOd3w7hNbnYzzBl/wmU5K4IKsDSMutW9lYZ3joXlFbhxBXgwlztqgmmovRmwW/pkw+WzLrMpPFHKaICw==",
+      "path": "recurpixel.notify.whatsapp.msg91/0.3.0",
+      "hashPath": "recurpixel.notify.whatsapp.msg91.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.WhatsApp.Twilio/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-L57GeGc0s2JEv1jx3k5yAu9oS3SImONinbcd1wCkih9oOmcP1muoNVlDnxp7hkd7ZSiASpjT+wkSeRVe81ZSTQ==",
+      "path": "recurpixel.notify.whatsapp.twilio/0.3.0",
+      "hashPath": "recurpixel.notify.whatsapp.twilio.0.3.0.nupkg.sha512"
+    },
+    "RecurPixel.Notify.WhatsApp.Vonage/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-339cpSQeTNIVuWvN9cprr24GceIvkqacJDTm42kQczD0oy5n8QZG3mDGVNR3zewSy4vmnyA+ItY+WGmWAPhSiQ==",
+      "path": "recurpixel.notify.whatsapp.vonage/0.3.0",
+      "hashPath": "recurpixel.notify.whatsapp.vonage.0.3.0.nupkg.sha512"
+    },
+    "SendGrid/9.29.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nb/zHePecN9U4/Bmct+O+lpgK994JklbCCNMIgGPOone/DngjQoMCHeTvkl+m0Nglvm0dqMEshmvB4fO8eF3dA==",
+      "path": "sendgrid/9.29.3",
+      "hashPath": "sendgrid.9.29.3.nupkg.sha512"
+    },
+    "starkbank-ecdsa/1.3.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OblOaKb1enXn+dSp7tsx9yjwV+/BEKM9jFhshIkZTwCk7LuTFTp+wSon6rFzuPiIiTGtvVWQNUw2slHjGktJog==",
+      "path": "starkbank-ecdsa/1.3.3",
+      "hashPath": "starkbank-ecdsa.1.3.3.nupkg.sha512"
+    },
+    "System.ClientModel/1.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NKKA3/O6B7PxmtIzOifExHdfoWthy3AD4EZ1JfzcZU8yGZTbYrK1qvXsHUL/1yQKKqWSKgIR1Ih/yf2gOaHc4w==",
+      "path": "system.clientmodel/1.7.0",
+      "hashPath": "system.clientmodel.1.7.0.nupkg.sha512"
+    },
     "System.CodeDom/7.0.0": {
       "type": "package",
       "serviceable": true,
@@ -964,6 +2007,20 @@
       "sha512": "sha512-/qEUN91mP/MUQmJnM5y5BdT7ZoPuVrtxnFlbJ8a3kBJGhe2wCzBfnPFtK2wTtEEcf3DMGR9J00GZZfg6HRI6yA==",
       "path": "system.management/7.0.2",
       "hashPath": "system.management.7.0.2.nupkg.sha512"
+    },
+    "System.Memory.Data/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BVYuec3jV23EMRDeR7Dr1/qhx7369dZzJ9IWy2xylvb4YfXsrUxspWc4UWYid/tj4zZK58uGZqn2WQiaDMhmAg==",
+      "path": "system.memory.data/8.0.1",
+      "hashPath": "system.memory.data.8.0.1.nupkg.sha512"
+    },
+    "Twilio/7.14.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dYFgEoNofKasj2cpYddZT7yVkBexkQz4eTlQ4c72BO2H1H8UbTGGl9Aa7NIFBUuTcdNWOYwIZlHjmitlRng28g==",
+      "path": "twilio/7.14.9",
+      "hashPath": "twilio.7.14.9.nupkg.sha512"
     }
   }
 }
