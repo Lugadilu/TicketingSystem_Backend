@@ -36,6 +36,18 @@ builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddScoped<IPhoneNumberService, PhoneNumberService>();
 
+builder.Services.Configure<MpesaDarajaOptions>(
+    builder.Configuration.GetSection("Mpesa"));
+
+builder.Services.AddHttpClient<IMpesaDarajaService, MpesaDarajaService>((serviceProvider, client) =>
+{
+    var options = serviceProvider
+        .GetRequiredService<Microsoft.Extensions.Options.IOptions<MpesaDarajaOptions>>()
+        .Value;
+
+    client.BaseAddress = new Uri(options.BaseUrl);
+});
+
 // Configure Fornax SMS options and service
 builder.Services.Configure<FornaxSmsOptions>(
     builder.Configuration.GetSection("Fornax"));
