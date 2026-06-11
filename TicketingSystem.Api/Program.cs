@@ -46,6 +46,7 @@ builder.Services.AddHttpClient<IMpesaDarajaService, MpesaDarajaService>((service
         .Value;
 
     client.BaseAddress = new Uri(options.BaseUrl);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
 // Configure Fornax SMS options and service
