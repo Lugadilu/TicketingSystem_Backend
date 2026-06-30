@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using TicketingSystem.Api.Data;
 using TicketingSystem.Api.Models;
 using TicketingSystem.Api.Services;
+using TicketingSystem.Api.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,10 +60,35 @@ builder.Services.AddHttpClient<IFornaxSmsService, FornaxSmsService>((serviceProv
     client.BaseAddress = new Uri(options.BaseUrl);
 });
 
+
 builder.Services.AddScoped<ITicketSmsTemplateService, TicketSmsTemplateService>();
 builder.Services.AddScoped<ITicketSmsNotificationService, TicketSmsNotificationService>();
 builder.Services.AddSingleton<ITicketSmsQueue, TicketSmsQueue>();
 builder.Services.AddHostedService<TicketSmsBackgroundWorker>();
+
+// Add WhatsApp services
+builder.Services.Configure<WhatsAppOptions>(
+    builder.Configuration.GetSection("WhatsApp"));
+
+builder.Services.AddMemoryCache();
+
+builder.Services.AddSignalR();
+
+builder.Services.AddHttpClient<IWhatsAppSenderService, WhatsAppSenderService>((serviceProvider, client) =>
+{
+    var options = serviceProvider
+        .GetRequiredService<Microsoft.Extensions.Options.IOptions<WhatsAppOptions>>()
+        .Value;
+
+    client.BaseAddress = new Uri(options.ApiBaseUrl);
+});
+
+builder.Services.AddSingleton<IWhatsAppMessageQueue, WhatsAppMessageQueue>();
+builder.Services.AddHostedService<WhatsAppMessageBackgroundWorker>();
+
+builder.Services.AddScoped<IWhatsAppConversationService, WhatsAppConversationService>();
+builder.Services.AddScoped<IWhatsAppWebhookSignatureValidator, WhatsAppWebhookSignatureValidator>();
+
 
 builder.Services.Configure<GoogleAuthSettings>(
     builder.Configuration.GetSection("GoogleAuth"));
@@ -105,6 +131,7 @@ app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<WhatsAppLiveChatHub>("/hubs/whatsapp-live-chat");
 
 app.Run();
 
