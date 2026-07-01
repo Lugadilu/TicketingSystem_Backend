@@ -1,13 +1,14 @@
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using TicketingSystem.Api.Data;
 using TicketingSystem.Api.Dtos.Tickets;
 using TicketingSystem.Api.DTOs.Tickets;
-using TicketingSystem.Api.Models;
-using Microsoft.AspNetCore.SignalR;
 using TicketingSystem.Api.Hubs;
+using TicketingSystem.Api.Models;
+
 namespace TicketingSystem.Api.Services;
 
 public interface IWhatsAppConversationService
@@ -23,6 +24,7 @@ public sealed class WhatsAppConversationService : IWhatsAppConversationService
     private readonly AppDbContext _context;
     private readonly ITicketService _ticketService;
     private readonly IWhatsAppSenderService _sender;
+    private readonly IWhatsAppUserResolver _userResolver;
     private readonly IPhoneNumberService _phoneNumberService;
     private readonly WhatsAppOptions _options;
     private readonly ILogger<WhatsAppConversationService> _logger;
@@ -33,6 +35,7 @@ public sealed class WhatsAppConversationService : IWhatsAppConversationService
         AppDbContext context,
         ITicketService ticketService,
         IWhatsAppSenderService sender,
+        IWhatsAppUserResolver userResolver,
         IPhoneNumberService phoneNumberService,
         IOptions<WhatsAppOptions> options,
         ILogger<WhatsAppConversationService> logger,
@@ -42,6 +45,7 @@ public sealed class WhatsAppConversationService : IWhatsAppConversationService
         _context = context;
         _ticketService = ticketService;
         _sender = sender;
+        _userResolver = userResolver;
         _phoneNumberService = phoneNumberService;
         _options = options.Value;
         _logger = logger;
@@ -67,126 +71,22 @@ public sealed class WhatsAppConversationService : IWhatsAppConversationService
 
         var state = GetState(normalizedPhone);
 
-        if (IsHelpIntent(text))
+        if (state.Step == WhatsAppConversationStep.HumanHandoff)
         {
-            SetState(normalizedPhone, WhatsAppConversationStep.Idle);
-            await _sender.SendMainMenuAsync(message.FromPhoneNumber, cancellationToken);
-            return;
-        }
-
-        if (IsAgentIntent(text) || text.Equals("talk_to_agent", StringComparison.OrdinalIgnoreCase))
-        {
-            SetState(normalizedPhone, WhatsAppConversationStep.AwaitingAgentIssue);
-
-            await _sender.SendTextMessageAsync(
-                message.FromPhoneNumber,
-                "Talk to an Agent\n\nPlease describe your issue briefly. An agent will see your message.",
-                cancellationToken);
-
+            await HandleHumanHandoffAsync(message, normalizedPhone, text, cancellationToken);
             return;
         }
 
         if (state.Step == WhatsAppConversationStep.AwaitingAgentIssue)
         {
-            SetState(normalizedPhone, WhatsAppConversationStep.HumanHandoff);
-
-            var liveChatMessage = new WhatsAppLiveChatMessage(
-                message.FromPhoneNumber,
-                message.CustomerName,
-                text,
-                DateTime.UtcNow);
-
-            await _liveChatHub.Clients.All.SendAsync(
-                "ReceiveWhatsAppMessage",
-                liveChatMessage,
-                cancellationToken);
-
-            await _sender.SendTextMessageAsync(
-                message.FromPhoneNumber,
-                "Ticket for human support created. You can continue typing here and an agent will respond shortly.",
-                cancellationToken);
-
-            return;
-        }
-
-        if (state.Step == WhatsAppConversationStep.HumanHandoff)
-            {
-                if (text.Equals("end chat", StringComparison.OrdinalIgnoreCase))
-                {
-                    SetState(normalizedPhone, WhatsAppConversationStep.Idle);
-
-                    await _sender.SendTextMessageAsync(
-                        message.FromPhoneNumber,
-                        "Chat ended. You can type \"menu\" anytime to view services.",
-                        cancellationToken);
-
-                    return;
-                }
-
-                var liveChatMessage = new WhatsAppLiveChatMessage(
-                    message.FromPhoneNumber,
-                    message.CustomerName,
-                    text,
-                    DateTime.UtcNow);
-
-                await _liveChatHub.Clients.All.SendAsync(
-                    "ReceiveWhatsAppMessage",
-                    liveChatMessage,
-                    cancellationToken);
-
-                await _sender.SendTextMessageAsync(
-                    message.FromPhoneNumber,
-                    "Your message has been sent to the support team. Type \"end chat\" to return to the bot.",
-                    cancellationToken);
-
-                return;
-            }
-
-        if (text.Equals("end chat", StringComparison.OrdinalIgnoreCase))
-        {
-            SetState(normalizedPhone, WhatsAppConversationStep.Idle);
-
-            await _sender.SendTextMessageAsync(
-                message.FromPhoneNumber,
-                "Chat ended. You can type \"menu\" anytime to view services.",
-                cancellationToken);
-
-            return;
-        }
-
-        if (text.Equals("create_ticket", StringComparison.OrdinalIgnoreCase) || IsCreateTicketIntent(text))
-        {
-            SetState(normalizedPhone, WhatsAppConversationStep.AwaitingNewTicketDescription);
-
-            await _sender.SendTextMessageAsync(
-                message.FromPhoneNumber,
-                "Create Ticket\n\nPlease describe the issue you need help with.",
-                cancellationToken);
-
+            await HandleAwaitingAgentIssueAsync(message, normalizedPhone, text, cancellationToken);
             return;
         }
 
         if (state.Step == WhatsAppConversationStep.AwaitingNewTicketDescription)
         {
-            await CreateTicketFromWhatsAppAsync(
-                message,
-                normalizedPhone,
-                text,
-                cancellationToken);
-
-            SetState(normalizedPhone, WhatsAppConversationStep.Idle);
-            return;
-        }
-
-        if (text.Equals("check_status", StringComparison.OrdinalIgnoreCase) || IsStatusIntent(text))
-        {
-            SetState(normalizedPhone, WhatsAppConversationStep.AwaitingTicketId);
-
-            await _sender.SendTextMessageAsync(
-                message.FromPhoneNumber,
-                "Please enter your ticket number, for example TKT-12345678-1234.",
-                cancellationToken);
-
+            await CreateTicketFromWhatsAppAsync(message, normalizedPhone, text, cancellationToken);
+            SetState(normalizedPhone, WhatsAppConversationStep.Idle, state.UserId, state.Role);
             return;
         }
 
@@ -194,35 +94,139 @@ public sealed class WhatsAppConversationService : IWhatsAppConversationService
         {
             await SendTicketStatusAsync(
                 message.FromPhoneNumber,
-                normalizedPhone,
+                state,
                 text,
                 cancellationToken);
 
+            SetState(normalizedPhone, WhatsAppConversationStep.Idle, state.UserId, state.Role);
+            return;
+        }
+
+        if (text.Equals("end chat", StringComparison.OrdinalIgnoreCase))
+        {
             SetState(normalizedPhone, WhatsAppConversationStep.Idle);
+            await _sender.SendWelcomeAndMenuAsync(message.FromPhoneNumber, cancellationToken);
             return;
         }
 
-        if (text.Equals("my_tickets", StringComparison.OrdinalIgnoreCase))
+        if (IsServiceAction(text))
         {
-            await SendRecentTicketsAsync(
-                message.FromPhoneNumber,
-                normalizedPhone,
-                cancellationToken);
-
+            await HandleServiceActionAsync(message, normalizedPhone, text, cancellationToken);
             return;
         }
 
-        if (text.Equals("download_report", StringComparison.OrdinalIgnoreCase))
+        SetState(normalizedPhone, WhatsAppConversationStep.Idle);
+        await _sender.SendWelcomeAndMenuAsync(message.FromPhoneNumber, cancellationToken);
+    }
+
+    private async Task HandleServiceActionAsync(
+        WhatsAppIncomingMessage message,
+        string normalizedPhone,
+        string text,
+        CancellationToken cancellationToken)
+    {
+        var user = await _userResolver.ResolveByWhatsAppPhoneAsync(message.FromPhoneNumber, cancellationToken);
+
+        if (user == null)
         {
-            await _sender.SendTextMessageAsync(
-                message.FromPhoneNumber,
-                "Please open your customer dashboard to download reports. WhatsApp report download will be added next.",
-                cancellationToken);
-
+            await _sender.SendRegistrationRequiredMessageAsync(message.FromPhoneNumber, cancellationToken);
             return;
         }
 
-        await _sender.SendMainMenuAsync(message.FromPhoneNumber, cancellationToken);
+        SetState(normalizedPhone, WhatsAppConversationStep.Idle, user.Id, user.Role);
+
+        switch (text.ToLowerInvariant())
+        {
+            case "create_ticket":
+                SetState(normalizedPhone, WhatsAppConversationStep.AwaitingNewTicketDescription, user.Id, user.Role);
+                await _sender.SendTextMessageAsync(
+                    message.FromPhoneNumber,
+                    "Create Ticket\n\nPlease describe the issue you need help with.",
+                    cancellationToken);
+                break;
+
+            case "check_status":
+                SetState(normalizedPhone, WhatsAppConversationStep.AwaitingTicketId, user.Id, user.Role);
+                await _sender.SendTextMessageAsync(
+                    message.FromPhoneNumber,
+                    "Please enter your ticket number, for example TKT-12345678-1234.",
+                    cancellationToken);
+                break;
+
+            case "my_tickets":
+                await SendRecentTicketsAsync(message.FromPhoneNumber, user, cancellationToken);
+                break;
+
+            case "download_report":
+                await _sender.SendTextMessageAsync(
+                    message.FromPhoneNumber,
+                    "Please open your customer dashboard to download reports. WhatsApp report download will be added next.",
+                    cancellationToken);
+                break;
+
+            case "talk_to_agent":
+                SetState(normalizedPhone, WhatsAppConversationStep.AwaitingAgentIssue, user.Id, user.Role);
+                await _sender.SendTextMessageAsync(
+                    message.FromPhoneNumber,
+                    "Talk to an Agent\n\nPlease describe your issue briefly. An agent will see your message.",
+                    cancellationToken);
+                break;
+        }
+    }
+
+    private async Task HandleAwaitingAgentIssueAsync(
+        WhatsAppIncomingMessage message,
+        string normalizedPhone,
+        string text,
+        CancellationToken cancellationToken)
+    {
+        SetState(normalizedPhone, WhatsAppConversationStep.HumanHandoff, GetState(normalizedPhone).UserId, GetState(normalizedPhone).Role);
+
+        var liveChatMessage = new WhatsAppLiveChatMessage(
+            message.FromPhoneNumber,
+            message.CustomerName,
+            text,
+            DateTime.UtcNow);
+
+        await _liveChatHub.Clients.All.SendAsync(
+            "ReceiveWhatsAppMessage",
+            liveChatMessage,
+            cancellationToken);
+
+        await _sender.SendTextMessageAsync(
+            message.FromPhoneNumber,
+            "Your message has been sent to our support team. You can continue typing here and an agent will respond shortly. Type \"end chat\" to return to the menu.",
+            cancellationToken);
+    }
+
+    private async Task HandleHumanHandoffAsync(
+        WhatsAppIncomingMessage message,
+        string normalizedPhone,
+        string text,
+        CancellationToken cancellationToken)
+    {
+        if (text.Equals("end chat", StringComparison.OrdinalIgnoreCase))
+        {
+            SetState(normalizedPhone, WhatsAppConversationStep.Idle);
+            await _sender.SendWelcomeAndMenuAsync(message.FromPhoneNumber, cancellationToken);
+            return;
+        }
+
+        var liveChatMessage = new WhatsAppLiveChatMessage(
+            message.FromPhoneNumber,
+            message.CustomerName,
+            text,
+            DateTime.UtcNow);
+
+        await _liveChatHub.Clients.All.SendAsync(
+            "ReceiveWhatsAppMessage",
+            liveChatMessage,
+            cancellationToken);
+
+        await _sender.SendTextMessageAsync(
+            message.FromPhoneNumber,
+            "Your message has been sent to the support team. Type \"end chat\" to return to the menu.",
+            cancellationToken);
     }
 
     private async Task CreateTicketFromWhatsAppAsync(
@@ -231,16 +235,21 @@ public sealed class WhatsAppConversationService : IWhatsAppConversationService
         string description,
         CancellationToken cancellationToken)
     {
-        var user = await _context.Users
-            .FirstOrDefaultAsync(u => u.PhoneNumber == normalizedPhone || u.PhoneNumber == message.FromPhoneNumber, cancellationToken);
+        var state = GetState(normalizedPhone);
+        Users? user = null;
+
+        if (state.UserId.HasValue)
+        {
+            user = await _context.Users.FirstOrDefaultAsync(
+                u => u.Id == state.UserId.Value && u.IsActive,
+                cancellationToken);
+        }
+
+        user ??= await _userResolver.ResolveByWhatsAppPhoneAsync(message.FromPhoneNumber, cancellationToken);
 
         if (user == null)
         {
-            await _sender.SendTextMessageAsync(
-                message.FromPhoneNumber,
-                "We could not find an account linked to this WhatsApp number. Please contact support to link your number.",
-                cancellationToken);
-
+            await _sender.SendRegistrationRequiredMessageAsync(message.FromPhoneNumber, cancellationToken);
             return;
         }
 
@@ -262,22 +271,37 @@ public sealed class WhatsAppConversationService : IWhatsAppConversationService
 
     private async Task SendTicketStatusAsync(
         string whatsappPhone,
-        string normalizedPhone,
+        WhatsAppConversationState state,
         string ticketNumber,
         CancellationToken cancellationToken)
     {
+        Users? user = null;
+
+        if (state.UserId.HasValue)
+        {
+            user = await _context.Users.FirstOrDefaultAsync(
+                u => u.Id == state.UserId.Value && u.IsActive,
+                cancellationToken);
+        }
+
+        user ??= await _userResolver.ResolveByWhatsAppPhoneAsync(whatsappPhone, cancellationToken);
+
+        if (user == null)
+        {
+            await _sender.SendRegistrationRequiredMessageAsync(whatsappPhone, cancellationToken);
+            return;
+        }
+
         var ticket = await _context.Tickets
-            .Include(t => t.CreatedByUser)
             .FirstOrDefaultAsync(t =>
-                t.TicketNumber == ticketNumber &&
-                (t.CreatedByUser.PhoneNumber == normalizedPhone || t.CreatedByUser.PhoneNumber == whatsappPhone),
+                t.TicketNumber == ticketNumber.Trim() && t.CreatedByUserId == user.Id,
                 cancellationToken);
 
         if (ticket == null)
         {
             await _sender.SendTextMessageAsync(
                 whatsappPhone,
-                "Ticket not found for this WhatsApp number. Please check the ticket number and try again.",
+                "Ticket not found for your account. Please check the ticket number and try again.",
                 cancellationToken);
 
             return;
@@ -291,27 +315,22 @@ public sealed class WhatsAppConversationService : IWhatsAppConversationService
 
     private async Task SendRecentTicketsAsync(
         string whatsappPhone,
-        string normalizedPhone,
+        Users user,
         CancellationToken cancellationToken)
     {
-        var tickets = await _context.Tickets
-            .Include(t => t.CreatedByUser)
-            .Where(t => t.CreatedByUser.PhoneNumber == normalizedPhone || t.CreatedByUser.PhoneNumber == whatsappPhone)
-            .OrderByDescending(t => t.CreatedAt)
-            .Take(5)
-            .ToListAsync(cancellationToken);
+        var result = await _ticketService.GetMyTicketsAsync(user.Id, 1, 5, user.Role);
 
-        if (tickets.Count == 0)
+        if (result.Items.Count == 0)
         {
             await _sender.SendTextMessageAsync(
                 whatsappPhone,
-                "No recent tickets were found for this WhatsApp number.",
+                "No recent tickets were found for your account.",
                 cancellationToken);
 
             return;
         }
 
-        var lines = tickets.Select(t =>
+        var lines = result.Items.Select(t =>
             $"{t.TicketNumber} - {t.Status} - {t.Title}");
 
         await _sender.SendTextMessageAsync(
@@ -333,8 +352,13 @@ public sealed class WhatsAppConversationService : IWhatsAppConversationService
         })!;
     }
 
-    private void SetState(string phoneNumber, WhatsAppConversationStep step)
+    private void SetState(
+        string phoneNumber,
+        WhatsAppConversationStep step,
+        Guid? userId = null,
+        UserRole? role = null)
     {
+        var current = GetState(phoneNumber);
         var key = GetCacheKey(phoneNumber);
 
         _cache.Set(
@@ -342,33 +366,22 @@ public sealed class WhatsAppConversationService : IWhatsAppConversationService
             new WhatsAppConversationState
             {
                 Step = step,
+                UserId = userId ?? current.UserId,
+                Role = role ?? current.Role,
                 UpdatedAtUtc = DateTime.UtcNow
             },
             TimeSpan.FromMinutes(_options.ConversationTimeoutMinutes));
     }
 
     private static string GetCacheKey(string phoneNumber)
-    {
-        return $"whatsapp:conversation:{phoneNumber}";
-    }
+        => $"whatsapp:conversation:{phoneNumber}";
 
-    private static bool IsHelpIntent(string text)
+    private static bool IsServiceAction(string text)
     {
-        return Regex.IsMatch(text, @"\b(help|menu|start|services|hi|hello)\b", RegexOptions.IgnoreCase);
-    }
-
-    private static bool IsStatusIntent(string text)
-    {
-        return Regex.IsMatch(text, @"\b(status|track|check|ticket status)\b", RegexOptions.IgnoreCase);
-    }
-
-    private static bool IsCreateTicketIntent(string text)
-    {
-        return Regex.IsMatch(text, @"\b(create|new ticket|raise ticket|open ticket|ticket)\b", RegexOptions.IgnoreCase);
-    }
-
-    private static bool IsAgentIntent(string text)
-    {
-        return Regex.IsMatch(text, @"\b(agent|human|person|support|representative)\b", RegexOptions.IgnoreCase);
+        return text.Equals("create_ticket", StringComparison.OrdinalIgnoreCase)
+            || text.Equals("check_status", StringComparison.OrdinalIgnoreCase)
+            || text.Equals("my_tickets", StringComparison.OrdinalIgnoreCase)
+            || text.Equals("download_report", StringComparison.OrdinalIgnoreCase)
+            || text.Equals("talk_to_agent", StringComparison.OrdinalIgnoreCase);
     }
 }

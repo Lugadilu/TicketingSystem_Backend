@@ -21,19 +21,22 @@ public class UserService : IUserService
     private readonly IInvitationService _invitationService;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IJwtTokenService _jwtTokenService;
+    private readonly IPhoneNumberService _phoneNumberService;
 
     public UserService(
         AppDbContext context,
         IEmailService emailService,
         IInvitationService invitationService,
         IPasswordHasher passwordHasher,
-        IJwtTokenService jwtTokenService)
+        IJwtTokenService jwtTokenService,
+        IPhoneNumberService phoneNumberService)
     {
         _context = context;
         _emailService = emailService;
         _invitationService = invitationService;
         _passwordHasher = passwordHasher;
         _jwtTokenService = jwtTokenService;
+        _phoneNumberService = phoneNumberService;
     }
     /// INVITE USER
     /// SuperAdmin invites TeamLeads
@@ -80,7 +83,7 @@ public class UserService : IUserService
             Email = dto.Email,
             FirstName = dto.FirstName,
             LastName = dto.LastName,
-            PhoneNumber = dto.PhoneNumber ?? string.Empty,
+            PhoneNumber = _phoneNumberService.NormalizeForStorage(dto.PhoneNumber),
             Role = dto.Role,
             Status = UserStatus.Pending,  // ← NOT ACTIVE YET
             InvitationToken = invitationToken,

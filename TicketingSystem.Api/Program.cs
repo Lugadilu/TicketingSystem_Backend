@@ -87,6 +87,7 @@ builder.Services.AddSingleton<IWhatsAppMessageQueue, WhatsAppMessageQueue>();
 builder.Services.AddHostedService<WhatsAppMessageBackgroundWorker>();
 
 builder.Services.AddScoped<IWhatsAppConversationService, WhatsAppConversationService>();
+builder.Services.AddScoped<IWhatsAppUserResolver, WhatsAppUserResolver>();
 builder.Services.AddScoped<IWhatsAppWebhookSignatureValidator, WhatsAppWebhookSignatureValidator>();
 
 

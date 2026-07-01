@@ -1,3 +1,5 @@
+using TicketingSystem.Api.Models;
+
 namespace TicketingSystem.Api.Services;
 
 public enum WhatsAppConversationStep
@@ -12,5 +14,7 @@ public enum WhatsAppConversationStep
 public sealed class WhatsAppConversationState
 {
     public WhatsAppConversationStep Step { get; set; } = WhatsAppConversationStep.Idle;
+    public Guid? UserId { get; set; }
+    public UserRole? Role { get; set; }
     public DateTime UpdatedAtUtc { get; set; } = DateTime.UtcNow;
 }

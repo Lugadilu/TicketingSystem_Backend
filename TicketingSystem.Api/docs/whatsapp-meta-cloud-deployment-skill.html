@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WhatsApp Meta Cloud Deployment Skill</title>
+  <style>
+    body { font-family: Segoe UI, Arial, sans-serif; line-height: 1.5; max-width: 800px; margin: 40px auto; color: #222; }
+    h1 { color: #1a5276; border-bottom: 2px solid #1a5276; padding-bottom: 8px; }
+    h2 { color: #2874a6; margin-top: 28px; }
+    h3 { color: #333; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14px; }
+    th, td { border: 1px solid #ccc; padding: 8px 10px; text-align: left; }
+    th { background: #eaf2f8; }
+    code, pre { background: #f4f4f4; font-family: Consolas, monospace; font-size: 13px; }
+    pre { padding: 12px; overflow-x: auto; border-left: 4px solid #2874a6; }
+    .meta { color: #666; font-size: 14px; margin-bottom: 24px; }
+    ul { margin: 8px 0 16px 20px; }
+    li { margin: 4px 0; }
+    .box { background: #f9f9f9; border: 1px solid #ddd; padding: 12px; margin: 12px 0; }
+  </style>
+</head>
+<body>
+
+<h1>WhatsApp Meta Cloud Deployment Skill</h1>
+<p class="meta"><strong>Reusable agent skill for ASP.NET Core + Meta WhatsApp Business Cloud API</strong><br>
+Version 1.0 | Extracted from Millennium EA / Ticketing System integration</p>
+
+<h2>1. Purpose</h2>
+<p>Teaches an AI coding agent (or developer) how to deploy the same WhatsApp bot architecture to <strong>any</strong> ASP.NET Core backend.</p>
+<p><strong>Use when:</strong> New client WhatsApp bot, redeployment, Meta webhook integration, interactive list menus, phone-based user verification.</p>
+
+<h2>2. Product behavior (Shuru / KRA model)</h2>
+<table>
+  <tr><th>When</th><th>Who</th><th>What happens</th></tr>
+  <tr><td>Any message (idle)</td><td>Everyone</td><td>Welcome text + "View Services" interactive menu</td></tr>
+  <tr><td>User picks a service</td><td>Unregistered</td><td>"Register on portal first, then message again"</td></tr>
+  <tr><td>User picks a service</td><td>Registered</td><td>Service runs with real UserId + Role</td></tr>
+  <tr><td>Mid-flow</td><td>Registered</td><td>Continue flow — no welcome spam</td></tr>
+</table>
+<div class="box"><strong>Key rule:</strong> The bot is open to everyone. Registration gates <em>actions</em>, not greetings.</div>
+
+<h2>3. Architecture</h2>
+<pre>Meta WhatsApp Cloud API
+        │
+        ▼ POST /api/whatsapp/webhook
+WhatsAppWebhookController → validate signature → enqueue → 200 OK
+        │
+        ▼
+WhatsAppMessageQueue (Channel)
+        │
+        ▼
+WhatsAppMessageBackgroundWorker
+        │
+        ▼
+WhatsAppConversationService
+        ├── WhatsAppUserResolver
+        ├── Domain services (ITicketService)
+        ├── WhatsAppSenderService
+        └── WhatsAppLiveChatHub (optional)</pre>
+
+<h2>4. Required files (copy per project)</h2>
+<table>
+  <tr><th>File</th><th>Role</th></tr>
+  <tr><td>WhatsAppOptions.cs</td><td>Configuration</td></tr>
+  <tr><td>WhatsAppWebhookController.cs</td><td>Webhook ingress</td></tr>
+  <tr><td>WhatsAppWebhookSignatureValidator.cs</td><td>HMAC security</td></tr>
+  <tr><td>WhatsAppIncomingMessage.cs</td><td>Internal DTO</td></tr>
+  <tr><td>WhatsAppMessageQueue.cs</td><td>Channel queue</td></tr>
+  <tr><td>WhatsAppMessageBackgroundWorker.cs</td><td>Async processor</td></tr>
+  <tr><td>WhatsAppConversationState.cs</td><td>Step + UserId + Role</td></tr>
+  <tr><td>WhatsAppUserResolver.cs</td><td>Phone lookup</td></tr>
+  <tr><td>WhatsAppConversationService.cs</td><td>Brain / state machine</td></tr>
+  <tr><td>WhatsAppSenderService.cs</td><td>Outbound to Meta</td></tr>
+  <tr><td>WhatsAppWebhookDto.cs</td><td>Meta JSON shapes</td></tr>
+</table>
+<p><strong>Shared:</strong> IPhoneNumberService — NormalizeForStorage + PhonesMatch</p>
+
+<h2>5. Program.cs wiring</h2>
+<pre>builder.Services.Configure&lt;WhatsAppOptions&gt;(builder.Configuration.GetSection("WhatsApp"));
+builder.Services.AddMemoryCache();
+builder.Services.AddHttpClient&lt;IWhatsAppSenderService, WhatsAppSenderService&gt;(...);
+builder.Services.AddSingleton&lt;IWhatsAppMessageQueue, WhatsAppMessageQueue&gt;();
+builder.Services.AddHostedService&lt;WhatsAppMessageBackgroundWorker&gt;();
+builder.Services.AddScoped&lt;IWhatsAppConversationService, WhatsAppConversationService&gt;();
+builder.Services.AddScoped&lt;IWhatsAppUserResolver, WhatsAppUserResolver&gt;();
+builder.Services.AddScoped&lt;IWhatsAppWebhookSignatureValidator, WhatsAppWebhookSignatureValidator&gt;();</pre>
+
+<h2>6. Configuration</h2>
+<pre>"WhatsApp": {
+  "ApiBaseUrl": "https://graph.facebook.com/v25.0",
+  "AccessToken": "",
+  "VerifyToken": "",
+  "PhoneNumberId": "",
+  "AppSecret": "",
+  "ConversationTimeoutMinutes": 30
+}</pre>
+
+<h2>7. Meta Developer Console</h2>
+<ol>
+  <li>Create Meta app → WhatsApp product</li>
+  <li>Get Phone Number ID + permanent Access Token</li>
+  <li>Webhook: https://YOUR_DOMAIN/api/whatsapp/webhook</li>
+  <li>Verify Token must match appsettings</li>
+  <li>Subscribe to <code>messages</code></li>
+  <li>Dev: ngrok http 5072</li>
+</ol>
+
+<h2>8. Conversation logic order</h2>
+<ol>
+  <li>Invalid phone → error</li>
+  <li>HumanHandoff → agent chat / end chat</li>
+  <li>AwaitingAgentIssue → start handoff</li>
+  <li>AwaitingNewTicketDescription → create ticket</li>
+  <li>AwaitingTicketId → show status</li>
+  <li>"end chat" → welcome + menu</li>
+  <li>Service action → registration gate → service</li>
+  <li><strong>Default → welcome + menu</strong></li>
+</ol>
+
+<h2>9. Service menu ids</h2>
+<table>
+  <tr><th>id</th><th>Action</th></tr>
+  <tr><td>create_ticket</td><td>Ask issue → CreateTicketAsync</td></tr>
+  <tr><td>check_status</td><td>Ask ticket # → lookup</td></tr>
+  <tr><td>my_tickets</td><td>GetMyTicketsAsync(userId, role)</td></tr>
+  <tr><td>download_report</td><td>Placeholder / PDF</td></tr>
+  <tr><td>talk_to_agent</td><td>SignalR live chat</td></tr>
+</table>
+
+<h2>10. Registration gate pattern</h2>
+<pre>var user = await _userResolver.ResolveByWhatsAppPhoneAsync(fromPhone, ct);
+if (user is null) {
+    await _sender.SendRegistrationRequiredMessageAsync(fromPhone, ct);
+    return;
+}
+SetState(phone, nextStep, user.Id, user.Role);</pre>
+
+<h2>11. Phone normalization</h2>
+<table>
+  <tr><th>Source</th><th>Example</th></tr>
+  <tr><td>WhatsApp</td><td>254712345678</td></tr>
+  <tr><td>Portal registration</td><td>0712345678</td></tr>
+</table>
+<p>On save: <code>NormalizeForStorage()</code>. On lookup: <code>PhonesMatch()</code>. Normalize existing DB rows before go-live.</p>
+
+<h2>12. Test matrix</h2>
+<table>
+  <tr><th>Test</th><th>Expected</th></tr>
+  <tr><td>Any idle message</td><td>Welcome + menu</td></tr>
+  <tr><td>Unregistered → Create Ticket</td><td>Registration message</td></tr>
+  <tr><td>Registered → Create Ticket</td><td>Ticket created</td></tr>
+  <tr><td>Registered → My Tickets</td><td>Tickets listed</td></tr>
+  <tr><td>0712… DB / 2547… WhatsApp</td><td>Match after normalize</td></tr>
+</table>
+
+<h2>13. Cursor agent prompt (new deployment)</h2>
+<pre>Use skill: whatsapp-meta-cloud-deployment
+
+Deploy WhatsApp Meta Cloud bot on this ASP.NET Core API:
+- Shuru pattern: welcome+menu for all idle messages
+- Registration gate on service actions only
+- Queue + background worker + signature validation
+- Phone normalization on save and lookup
+- Integrate with existing domain services
+
+Client name: [NAME]
+Portal URL: [URL]
+Webhook URL: [URL]</pre>
+
+<h2>14. Skill files (Cursor)</h2>
+<ul>
+  <li><code>~/.cursor/skills/whatsapp-meta-cloud-deployment/SKILL.md</code></li>
+  <li><code>~/.cursor/skills/whatsapp-meta-cloud-deployment/reference.md</code></li>
+</ul>
+
+</body>
+</html>

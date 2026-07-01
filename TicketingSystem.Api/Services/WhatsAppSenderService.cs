@@ -15,10 +15,33 @@ public interface IWhatsAppSenderService
     Task SendMainMenuAsync(
         string toPhoneNumber,
         CancellationToken cancellationToken = default);
+
+    Task SendWelcomeAndMenuAsync(
+        string toPhoneNumber,
+        CancellationToken cancellationToken = default);
+
+    Task SendRegistrationRequiredMessageAsync(
+        string toPhoneNumber,
+        CancellationToken cancellationToken = default);
 }
 
 public sealed class WhatsAppSenderService : IWhatsAppSenderService
 {
+    private const string WelcomeMessage =
+        "Welcome to Millennium EA Limited Service Centre!\n\n" +
+        "We are a tech company that sells technology solutions. " +
+        "You can access the following services right here on WhatsApp:\n\n" +
+        "• Create Ticket\n" +
+        "• Check Status\n" +
+        "• My Tickets\n" +
+        "• Download Report\n" +
+        "• Talk to an Agent\n\n" +
+        "Tap the button below to get started.";
+
+    private const string RegistrationRequiredMessage =
+        "We couldn't find an account for this WhatsApp number. " +
+        "Please register on the portal first, then message us again to continue.";
+
     private readonly HttpClient _httpClient;
     private readonly WhatsAppOptions _options;
     private readonly ILogger<WhatsAppSenderService> _logger;
@@ -32,6 +55,19 @@ public sealed class WhatsAppSenderService : IWhatsAppSenderService
         _options = options.Value;
         _logger = logger;
     }
+
+    public async Task SendWelcomeAndMenuAsync(
+        string toPhoneNumber,
+        CancellationToken cancellationToken = default)
+    {
+        await SendTextMessageAsync(toPhoneNumber, WelcomeMessage, cancellationToken);
+        await SendMainMenuAsync(toPhoneNumber, cancellationToken);
+    }
+
+    public Task SendRegistrationRequiredMessageAsync(
+        string toPhoneNumber,
+        CancellationToken cancellationToken = default)
+        => SendTextMessageAsync(toPhoneNumber, RegistrationRequiredMessage, cancellationToken);
 
     public Task SendMainMenuAsync(
         string toPhoneNumber,
@@ -49,15 +85,15 @@ public sealed class WhatsAppSenderService : IWhatsAppSenderService
                 header = new
                 {
                     type = "text",
-                    text = "Ticketing Services"
+                    text = "Millennium EA Services"
                 },
                 body = new
                 {
-                    text = "Welcome to Ticketing Support. Choose a service below:"
+                    text = "Select a service from the list below to proceed:"
                 },
                 footer = new
                 {
-                    text = "Powered by your ticketing system"
+                    text = "Millennium EA Limited"
                 },
                 action = new
                 {

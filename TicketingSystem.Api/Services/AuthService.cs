@@ -31,6 +31,7 @@ public class AuthService : IAuthService
     private readonly IJwtTokenService _jwtTokenService;
     private readonly IInvitationService _invitationService;
     private readonly IEmailService _emailService;
+    private readonly IPhoneNumberService _phoneNumberService;
     
     //  FIX: Add this field declaration
     private readonly GoogleAuthSettings _googleAuth;
@@ -43,6 +44,7 @@ public class AuthService : IAuthService
         IJwtTokenService jwtTokenService,
         IInvitationService invitationService,
         IEmailService emailService,
+        IPhoneNumberService phoneNumberService,
         IOptions<GoogleAuthSettings> googleAuthSettings) //  Fixed parameter name
     {
         _context = context;
@@ -51,6 +53,7 @@ public class AuthService : IAuthService
         _jwtTokenService = jwtTokenService;
         _invitationService = invitationService;
         _emailService = emailService;
+        _phoneNumberService = phoneNumberService;
         
         // ✅ FIX: Properly assign from googleAuthSettings parameter
         _googleAuth = googleAuthSettings.Value;
@@ -75,7 +78,7 @@ public class AuthService : IAuthService
             PasswordHash = _passwordHasher.HashPassword(dto.Password),
             FirstName = dto.FirstName,
             LastName = dto.LastName,
-            PhoneNumber = dto.PhoneNumber ?? string.Empty,
+            PhoneNumber = _phoneNumberService.NormalizeForStorage(dto.PhoneNumber),
             Role = UserRole.Customer,
             Status = UserStatus.Active,  // Customers are active immediately
             IsEmailVerified = false,
