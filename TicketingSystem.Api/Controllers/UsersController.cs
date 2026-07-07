@@ -147,7 +147,7 @@ public class UsersController : ControllerBase
     /// Query Parameters:
     /// - role: Optional role filter (SuperAdmin, TeamLead, Technician, Customer, Support)
     [HttpGet]
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Roles = "SuperAdmin, Support")]
     public async Task<IActionResult> GetAllUsers([FromQuery] string? role = null)
     {
         try

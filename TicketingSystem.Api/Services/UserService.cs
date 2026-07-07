@@ -290,6 +290,8 @@ public class UserService : IUserService
             UpdatedAt = user.UpdatedAt,
             InvitationExpiresAt = user.InvitationExpiresAt,
             InvitationAcceptedAt = user.InvitationAcceptedAt,
+            TeamLeadUserId = user.TeamLeadUserId,
+            InvitedByUserId = user.InvitedByUserId,
             InvitedByUserName = user.InvitedByUser != null
                 ? $"{user.InvitedByUser.FirstName} {user.InvitedByUser.LastName}"
                 : (relatedUser != null ? $"{relatedUser.FirstName} {relatedUser.LastName}" : null),

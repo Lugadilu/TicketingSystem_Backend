@@ -96,7 +96,7 @@ public class TicketsController : ControllerBase
 
             var result = await _ticketService.CreateTicketAsync(dto, userId);
 
-            // ✅ Ensure response includes all frontend-required fields
+            //  Ensure response includes all frontend-required fields
             return Ok(new ApiResponseDto<CreateTicketResponseDto>
             {
                 Success = true,
@@ -157,7 +157,7 @@ public class TicketsController : ControllerBase
             var userId = GetUserIdFromToken();
             var userRole = GetUserRoleFromToken();
 
-            // ✅ NEW: Call overload with role-based access control
+            //  Call overload with role-based access control
             var result = await _ticketService.GetTicketByIdAsync(id, userId, userRole);
 
             return Ok(new ApiResponseDto<TicketResponseDto>
