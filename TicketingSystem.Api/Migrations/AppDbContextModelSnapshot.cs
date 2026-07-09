@@ -22,6 +22,158 @@ namespace TicketingSystem.Api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("TicketingSystem.Api.Models.ChannelIdentity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Channel")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("ConversationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<Guid>("CustomerProfileId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ExternalId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConversationId");
+
+                    b.HasIndex("CustomerProfileId");
+
+                    b.HasIndex("Channel", "ExternalId")
+                        .IsUnique();
+
+                    b.ToTable("ChannelIdentities");
+                });
+
+            modelBuilder.Entity("TicketingSystem.Api.Models.Conversation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AssignedAgentUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Channel")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<Guid>("CustomerProfileId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("LastMessageAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedAgentUserId");
+
+                    b.HasIndex("CustomerProfileId");
+
+                    b.HasIndex("LastMessageAt");
+
+                    b.ToTable("Conversations");
+                });
+
+            modelBuilder.Entity("TicketingSystem.Api.Models.ConversationMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ConversationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<int>("Direction")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ExternalMessageId")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<int>("SenderType")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("SenderUserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConversationId");
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("ExternalMessageId");
+
+                    b.HasIndex("SenderUserId");
+
+                    b.ToTable("ConversationMessages");
+                });
+
+            modelBuilder.Entity("TicketingSystem.Api.Models.CustomerProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PhoneNumber");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CustomerProfiles");
+                });
+
             modelBuilder.Entity("TicketingSystem.Api.Models.NotificationLog", b =>
                 {
                     b.Property<Guid>("Id")
@@ -626,6 +778,71 @@ namespace TicketingSystem.Api.Migrations
                         });
                 });
 
+            modelBuilder.Entity("TicketingSystem.Api.Models.ChannelIdentity", b =>
+                {
+                    b.HasOne("TicketingSystem.Api.Models.Conversation", "Conversation")
+                        .WithMany("ChannelIdentities")
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TicketingSystem.Api.Models.CustomerProfile", "CustomerProfile")
+                        .WithMany("ChannelIdentities")
+                        .HasForeignKey("CustomerProfileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Conversation");
+
+                    b.Navigation("CustomerProfile");
+                });
+
+            modelBuilder.Entity("TicketingSystem.Api.Models.Conversation", b =>
+                {
+                    b.HasOne("TicketingSystem.Api.Models.Users", "AssignedAgentUser")
+                        .WithMany()
+                        .HasForeignKey("AssignedAgentUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("TicketingSystem.Api.Models.CustomerProfile", "CustomerProfile")
+                        .WithMany("Conversations")
+                        .HasForeignKey("CustomerProfileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AssignedAgentUser");
+
+                    b.Navigation("CustomerProfile");
+                });
+
+            modelBuilder.Entity("TicketingSystem.Api.Models.ConversationMessage", b =>
+                {
+                    b.HasOne("TicketingSystem.Api.Models.Conversation", "Conversation")
+                        .WithMany("Messages")
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TicketingSystem.Api.Models.Users", "SenderUser")
+                        .WithMany()
+                        .HasForeignKey("SenderUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Conversation");
+
+                    b.Navigation("SenderUser");
+                });
+
+            modelBuilder.Entity("TicketingSystem.Api.Models.CustomerProfile", b =>
+                {
+                    b.HasOne("TicketingSystem.Api.Models.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TicketingSystem.Api.Models.TicketActivityLog", b =>
                 {
                     b.HasOne("TicketingSystem.Api.Models.Users", "ChangedByUser")
@@ -752,6 +969,20 @@ namespace TicketingSystem.Api.Migrations
                     b.Navigation("InvitedByUser");
 
                     b.Navigation("TeamLeadUser");
+                });
+
+            modelBuilder.Entity("TicketingSystem.Api.Models.Conversation", b =>
+                {
+                    b.Navigation("ChannelIdentities");
+
+                    b.Navigation("Messages");
+                });
+
+            modelBuilder.Entity("TicketingSystem.Api.Models.CustomerProfile", b =>
+                {
+                    b.Navigation("ChannelIdentities");
+
+                    b.Navigation("Conversations");
                 });
 
             modelBuilder.Entity("TicketingSystem.Api.Models.Tickets", b =>
