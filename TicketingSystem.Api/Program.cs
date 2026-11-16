@@ -22,7 +22,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173") // your Vite dev server
+            // Allow the Vite dev server (port 5173) whether opened via localhost,
+            // a LAN IP or a Tailscale IP. Tighten this for production.
+            policy.SetIsOriginAllowed(origin =>
+                      Uri.TryCreate(origin, UriKind.Absolute, out var uri) && uri.Port == 5173)
                   .AllowAnyMethod()
                   .AllowAnyHeader()
                   .AllowCredentials();

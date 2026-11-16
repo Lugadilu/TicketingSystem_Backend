@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "k+6xXOitf3c=",
+  "dgSpecHash": "WGbwkvJBduc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\USER\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
+  "projectFilePath": "C:\\Users\\USER\\BACKUP_2026AUGUST\\Others\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\awssdk.core\\4.0.3.12\\awssdk.core.4.0.3.12.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\awssdk.simpleemailv2\\4.0.11.5\\awssdk.simpleemailv2.4.0.11.5.nupkg.sha512",
@@ -108,12 +108,24 @@
   ],
   "logs": [
     {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'Microsoft.OpenApi' 2.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
+      "projectPath": "C:\\Users\\USER\\BACKUP_2026AUGUST\\Others\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\USER\\BACKUP_2026AUGUST\\Others\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
+      "libraryId": "Microsoft.OpenApi",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
       "code": "NU1701",
       "level": "Warning",
       "message": "Package 'iTextSharp 5.5.13.5' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net10.0'. This package may not be fully compatible with your project.",
-      "projectPath": "C:\\Users\\USER\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
+      "projectPath": "C:\\Users\\USER\\BACKUP_2026AUGUST\\Others\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\USER\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
+      "filePath": "C:\\Users\\USER\\BACKUP_2026AUGUST\\Others\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
       "libraryId": "iTextSharp",
       "targetGraphs": [
         "net10.0"

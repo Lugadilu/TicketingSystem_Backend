@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj": {}
+    "C:\\Users\\USER\\BACKUP_2026AUGUST\\Others\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj": {
+    "C:\\Users\\USER\\BACKUP_2026AUGUST\\Others\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\BACKUP_2026AUGUST\\Others\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
         "projectName": "TicketingSystem.Api",
-        "projectPath": "C:\\Users\\USER\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
+        "projectPath": "C:\\Users\\USER\\BACKUP_2026AUGUST\\Others\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\TicketingSystem.Api.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\obj\\",
+        "outputPath": "C:\\Users\\USER\\BACKUP_2026AUGUST\\Others\\Documents\\projects\\Ticketing\\TicketingSystem.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
