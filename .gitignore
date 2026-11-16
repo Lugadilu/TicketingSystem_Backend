@@ -1,5 +1,10 @@
 # backend
 
+# Build output (never commit these)
+bin/
+obj/
+
+# Secrets stay local
 appsettings.json
 
 node_modules
@@ -7,7 +12,6 @@ Test_auth.http
 Test_Tickets.http
 Test_Users.http
 TicketEndpoints.http
-AppDbContext.cs
 
 
 # Logs
